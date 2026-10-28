@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>TripCash — Travel together. Split smart.</title>
+  <meta name="description" content="Track shared travel expenses across currencies, split costs equally or exactly, and know who owes what." />
+  <meta name="theme-color" content="#0EA5A0" />
+  <link rel="canonical" href="https://tripcash.de/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="TripCash" />
+  <meta property="og:title" content="TripCash — Travel together. Split smart." />
+  <meta property="og:description" content="Track shared travel expenses across currencies, split costs equally or exactly, and know who owes what." />
+  <meta property="og:url" content="https://tripcash.de/" />
+  <meta property="og:image" content="https://tripcash.de/assets/tripcash-link-preview.webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="TripCash shared travel expense app" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TripCash — Travel together. Split smart." />
+  <meta name="twitter:description" content="Track shared travel expenses across currencies, split costs equally or exactly, and know who owes what." />
+  <meta name="twitter:image" content="https://tripcash.de/assets/tripcash-link-preview.webp" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles/app.css?v=20261010-1" />
+  <link rel="stylesheet" href="styles/landing.css?v=20260929-3" />
+  <link rel="stylesheet" href="styles/landing-contact.css?v=20261006-1" />
+  <link rel="stylesheet" href="styles/landing-gallery.css?v=20261005-1" />
+  <!-- web-only:start -->
+  <link rel="stylesheet" href="styles/web-shell.css?v=20261006-3" />
+  <link rel="stylesheet" href="styles/phone-trip-expenses.css?v=20261005-1" />
+  <link rel="stylesheet" href="styles/analytics-consent.css?v=20260930-1" />
+  <link rel="stylesheet" href="styles/landing-theme.css?v=20261005-1" />
+  <!-- web-only:end -->
+  <script defer src="scripts/supabase-client.js?v=20260906-33"></script>
+</head>
+<body>
+  <!-- web-only:start -->
+  <header id="web-topbar" class="web-topbar" hidden>
+    <button type="button" class="web-brand" data-action="go-to-trips" aria-label="TripCash trips">
+      <span class="web-brand-mark" aria-hidden="true"></span><span>TripCash</span>
+    </button>
+    <nav class="web-main-nav" aria-label="Main app navigation">
+      <button type="button" data-nav="trips" data-action="go-to-trips">Trips</button>
+      <button type="button" data-nav="analytics" data-action="open-analytics-view">Analytics</button>
+      <button type="button" data-nav="profile" data-action="open-profile-view">Profile &amp; settings</button>
+    </nav>
+    <details id="web-trip-switcher" class="web-disclosure web-trip-switcher" hidden>
+      <summary aria-label="Switch trip"><span class="web-status-dot" aria-hidden="true"></span><span id="web-trip-name" class="web-trip-name"></span><span aria-hidden="true">▾</span></summary>
+      <div id="web-trip-options" class="web-dropdown"></div>
+    </details>
+    <span class="web-topbar-spacer"></span>
+    <div id="web-sync" class="web-sync" data-state="synced">
+      <span class="web-status-dot" aria-hidden="true"></span><span id="web-sync-label" role="status" aria-live="polite">Synced</span>
+    </div>
+    <button id="web-new-trip" type="button" class="btn btn-primary web-new-trip" data-action="open-new-trip-modal">+ New trip</button>
+    <details id="web-account-menu" class="web-disclosure">
+      <summary aria-label="Open account menu"><span id="web-avatar" class="web-avatar">TC</span></summary>
+      <div class="web-dropdown">
+        <div id="web-account-name" class="web-account-name"></div>
+        <button id="web-theme-choice" type="button" data-action="toggle-theme">Theme: system</button>
+        <button type="button" data-action="open-account-settings">Account settings</button>
+        <button type="button" data-action="handle-logout">Log out</button>
+      </div>
+    </details>
+  </header>
+  <!-- web-only:end -->
+
+  <div id="screen-welcome" class="screen welcome-screen">
+    <nav class="landing-nav" aria-label="Main navigation">
+      <a class="landing-brand" href="#screen-welcome" aria-label="TripCash home">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="39" cy="25" r="17" fill="#F59E0B"></circle>
+          <circle cx="25" cy="39" r="17" fill="#0EA5A0"></circle>
+        </svg>
+        <span>TripCash</span>
+      </a>
+      <div class="landing-nav-controls">
+        <div class="landing-nav-links">
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
+          <button type="button" data-action="open-landing-legal" data-value="privacy">Privacy</button>
+          <button type="button" data-action="open-landing-legal" data-value="terms">Terms</button>
+          <a href="#contact">Contact</a>
+        </div>
+        <button id="landing-theme-toggle" class="landing-theme-toggle" type="button" data-action="toggle-theme" aria-label="Theme: system. Change color theme."><span aria-hidden="true">◐</span><b>System</b></button>
+      </div>
+    </nav>
+
+    <main class="landing-main">
+      <section class="landing-hero" aria-labelledby="landing-title">
+        <div class="landing-hero-copy">
+          <span class="landing-kicker"><i></i> Built for trips with friends</span>
+          <h1 id="landing-title">Great trips.<br /><em>Zero money drama.</em></h1>
+          <p>Track shared expenses across currencies, split every cost fairly, and know exactly who owes what—without spreadsheets or awkward group-chat maths.</p>
+          <div class="landing-actions">
+            <button id="landing-primary-action" class="landing-primary" data-action="enter-web-app" data-value="login">Continue on web <span>→</span></button>
+            <span class="landing-free-note">Free to start · No card required</span>
+          </div>
+          <div class="store-row" aria-label="Mobile apps coming soon">
+            <span class="store-badge" aria-disabled="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.1 12.5c0-2.8 2.3-4.2 2.4-4.3a5.2 5.2 0 0 0-4.1-2.2c-1.7-.2-3.4 1-4.2 1-.9 0-2.2-1-3.6-1-1.9 0-3.7 1.1-4.7 2.8-2 3.5-.5 8.7 1.4 11.5 1 1.4 2.1 2.9 3.6 2.8 1.4-.1 2-1 3.7-1s2.2 1 3.7 1c1.5 0 2.5-1.4 3.5-2.8a12.5 12.5 0 0 0 1.6-3.3 4.9 4.9 0 0 1-3.3-4.5ZM14.3 4.2A5 5 0 0 0 15.5.6a5.1 5.1 0 0 0-3.4 1.7 4.7 4.7 0 0 0-1.2 3.5 4.2 4.2 0 0 0 3.4-1.6Z"/></svg>
+              <span><small>Coming soon to the</small><b>App Store</b></span>
+            </span>
+            <span class="store-badge" aria-disabled="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.2 2.3 10.9 9.8L3.3 21.8A2.3 2.3 0 0 1 3 20.6V3.5c0-.5.1-.9.2-1.2Zm12.3 11 2.5 2.3L6.5 22c-.6.3-1.2.3-1.7 0l10.7-8.7Zm3.9-2.2c.8.4 1.2 1 1.2 1.6 0 .7-.4 1.2-1.2 1.7l-1.2.7-2.7-2.5 2.8-2.3 1.1.8ZM6.5 2l11.4 6.5-2.4 2.2L4.8 1.9c.5-.2 1.1-.2 1.7.1Z"/></svg>
+              <span><small>Coming soon to</small><b>Google Play</b></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="landing-phone-wrap" aria-label="TripCash Vienna Autumn expenses">
+          <div class="landing-orbit orbit-one"></div>
+          <div class="landing-orbit orbit-two"></div>
+          <div class="landing-phone landing-phone-real">
+            <img class="landing-phone-shot" data-theme-image data-light-src="assets/screenshots/android/light/tripcash-expenses.webp" data-dark-src="assets/screenshots/android/dark/tripcash-expenses.webp" alt="TripCash Vienna Autumn expenses on Android" width="1080" height="2400" decoding="async" fetchpriority="high" />
+          </div>
+          <div class="landing-float float-balance"><span>15</span><div><small>EXPENSES</small><strong>Across 5 days</strong></div></div>
+          <div class="landing-float float-split"><span>4</span><div><small>TRAVELLERS</small><strong>Equal split</strong></div></div>
+        </div>
+      </section>
+
+      <section class="landing-proof" aria-label="TripCash benefits">
+        <span><b>✓</b> No ads</span><span><b>✓</b> Optional analytics</span><span><b>✓</b> Guest mode</span><span><b>✓</b> Offline sync</span>
+      </section>
+
+      <section id="features" class="landing-section">
+        <div class="landing-section-heading"><span>Everything stays clear</span><h2>One place for every shared cost.</h2><p>From the first booking to the final coffee, TripCash keeps the numbers understandable for everyone.</p></div>
+        <div class="feature-grid">
+          <article class="feature-card feature-teal"><i>↗</i><h3>Track as you travel</h3><p>Add day-by-day expenses in different currencies and see the trip budget update immediately.</p><div class="mini-expenses"><span>🍕 Pizza night <b>€48</b></span><span>🚆 Train tickets <b>€76</b></span><span>☕ Morning coffee <b>€18</b></span></div></article>
+          <article class="feature-card feature-amber"><i>÷</i><h3>Split it your way</h3><p>Share equally or enter exact amounts when one size does not fit all.</p><div class="split-people"><span>AS</span><span>LM</span><span>SK</span><span>YOU</span></div><strong class="split-total">€28.50 each</strong></article>
+          <article class="feature-card feature-dark"><i>✓</i><h3>Settle without stress</h3><p>TripCash turns group balances into clear suggested payments.</p><div class="settle-line"><span class="avatar-a">A</span><b>Alex</b><em>pays</em><b>Mira</b><strong>€42.80</strong></div></article>
+        </div>
+      </section>
+
+      <section id="how-it-works" class="landing-section landing-how">
+        <div class="landing-section-heading"><span>How it works</span><h2>From “we should go” to fully settled.</h2></div>
+        <div class="steps-grid">
+          <article><b>01</b><div><h3>Create the trip</h3><p>Add dates, a trip currency and an optional budget.</p></div></article>
+          <article><b>02</b><div><h3>Invite and track</h3><p>Add travellers, record who paid and choose an equal or exact split.</p></div></article>
+          <article><b>03</b><div><h3>Settle up</h3><p>Review suggested payments that bring everyone’s balance to zero.</p></div></article>
+        </div>
+      </section>
+
+      <section id="screenshots" class="landing-section landing-screenshots">
+        <div class="landing-section-heading"><span>See it in action</span><h2>Every trip, clear at a glance.</h2><p>Explore trips, upcoming plans, daily expenses, balances and spending insights.</p></div>
+        <div class="screenshot-grid" aria-label="TripCash app screenshots">
+          <figure class="screenshot-tile">
+            <button type="button" class="screenshot-card" data-action="open-landing-screenshot" data-view="trips" aria-label="View larger: Trips at a glance"><img data-theme-image data-light-src="assets/screenshots/android/light/tripcash-trips.webp" data-dark-src="assets/screenshots/android/dark/tripcash-trips.webp" alt="TripCash active and ended trips on Android" loading="lazy" decoding="async" width="1080" height="2400" /><span class="screenshot-zoom-cue" aria-hidden="true">View larger ↗</span></button>
+            <figcaption><b>Trips at a glance</b><span>See active and ended trips, totals and group sizes immediately.</span></figcaption>
+          </figure>
+          <figure class="screenshot-tile">
+            <button type="button" class="screenshot-card" data-action="open-landing-screenshot" data-view="upcoming" aria-label="View larger: Plan what is next"><img data-theme-image data-light-src="assets/screenshots/android/light/tripcash-upcoming.webp" data-dark-src="assets/screenshots/android/dark/tripcash-upcoming.webp" alt="TripCash upcoming trips on Android" loading="lazy" decoding="async" width="1080" height="2400" /><span class="screenshot-zoom-cue" aria-hidden="true">View larger ↗</span></button>
+            <figcaption><b>Plan what’s next</b><span>Keep future trips separate until their start date arrives.</span></figcaption>
+          </figure>
+          <figure class="screenshot-tile">
+            <button type="button" class="screenshot-card" data-action="open-landing-screenshot" data-view="expenses" aria-label="View larger: Track every expense"><img data-theme-image data-light-src="assets/screenshots/android/light/tripcash-expenses.webp" data-dark-src="assets/screenshots/android/dark/tripcash-expenses.webp" alt="TripCash five-day shared expense list on Android" loading="lazy" decoding="async" width="1080" height="2400" /><span class="screenshot-zoom-cue" aria-hidden="true">View larger ↗</span></button>
+            <figcaption><b>Track every expense</b><span>Know who paid and how each cost was split.</span></figcaption>
+          </figure>
+          <figure class="screenshot-tile">
+            <button type="button" class="screenshot-card" data-action="open-landing-screenshot" data-view="balances" aria-label="View larger: Settle fairly"><img data-theme-image data-light-src="assets/screenshots/android/light/tripcash-balances.webp" data-dark-src="assets/screenshots/android/dark/tripcash-balances.webp" alt="TripCash member balances on Android" loading="lazy" decoding="async" width="1080" height="2400" /><span class="screenshot-zoom-cue" aria-hidden="true">View larger ↗</span></button>
+            <figcaption><b>Settle fairly</b><span>Turn shared costs into simple final payments.</span></figcaption>
+          </figure>
+          <figure class="screenshot-tile">
+            <button type="button" class="screenshot-card" data-action="open-landing-screenshot" data-view="analytics" aria-label="View larger: See the big picture"><img data-theme-image data-light-src="assets/screenshots/android/light/tripcash-analytics.webp" data-dark-src="assets/screenshots/android/dark/tripcash-analytics.webp" alt="TripCash combined travel analytics on Android" loading="lazy" decoding="async" width="1080" height="2400" /><span class="screenshot-zoom-cue" aria-hidden="true">View larger ↗</span></button>
+            <figcaption><b>See the big picture</b><span>Compare spending across every trip and category.</span></figcaption>
+          </figure>
+          <figure class="screenshot-tile">
+            <button type="button" class="screenshot-card" data-action="open-landing-screenshot" data-view="trip-analytics" aria-label="View larger: Understand each trip"><img data-theme-image data-light-src="assets/screenshots/android/light/tripcash-trip-analytics.webp" data-dark-src="assets/screenshots/android/dark/tripcash-trip-analytics.webp" alt="TripCash Vienna Autumn budget and analytics on Android" loading="lazy" decoding="async" width="1080" height="2400" /><span class="screenshot-zoom-cue" aria-hidden="true">View larger ↗</span></button>
+            <figcaption><b>Understand each trip</b><span>Review its budget, categories and daily spending.</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+  <!-- web-only:start -->
+      <dialog id="landing-screenshot-dialog" class="screenshot-dialog" aria-labelledby="landing-screenshot-title">
+        <div class="screenshot-dialog-header"><h2 id="landing-screenshot-title">TripCash screenshot</h2><button type="button" class="screenshot-dialog-close" data-action="close-landing-screenshot" aria-label="Close screenshot">✕</button></div>
+        <div class="screenshot-dialog-toolbar" aria-label="Screenshot zoom controls"><span id="landing-screenshot-zoom" role="status" aria-live="polite">100%</span><button type="button" data-action="zoom-landing-screenshot-out" aria-label="Zoom out" disabled>−</button><button type="button" data-action="zoom-landing-screenshot-in" aria-label="Zoom in">＋</button></div>
+        <div class="screenshot-dialog-viewport"><img id="landing-screenshot-image" alt="" width="1080" height="2400" /></div>
+      </dialog>
+  <!-- web-only:end -->
+
+      <section id="contact" class="landing-section landing-contact">
+        <div class="contact-copy">
+          <span>Contact TripCash</span>
+          <h2>Questions, feedback or support?</h2>
+          <p>Send a message and it will go directly to <strong>support@tripcash.de</strong>.</p>
+          <div class="contact-note"><b>↗</b><span><strong>Direct support</strong><small>Your details are used only to answer your message.</small></span></div>
+        </div>
+        <form id="landing-contact-form" class="contact-form" novalidate>
+          <input id="contact-opened-at" type="hidden" name="openedAt" value="" />
+          <div class="contact-honeypot" aria-hidden="true"><label for="contact-website">Website</label><input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+          <div class="contact-field"><label for="contact-name">Name</label><input id="contact-name" name="name" type="text" maxlength="80" autocomplete="name" required placeholder="Your name" /></div>
+          <div class="contact-field"><label for="contact-email">Email</label><input id="contact-email" name="email" type="email" maxlength="254" autocomplete="email" required placeholder="you@email.com" /></div>
+          <div class="contact-field"><label for="contact-subject">Subject</label><select id="contact-subject" name="subject" required><option value="">Choose a topic</option><option>App support</option><option>Account or privacy</option><option>Feedback</option><option>Business enquiry</option><option>Other</option></select></div>
+          <div class="contact-field"><label for="contact-message">Message</label><textarea id="contact-message" name="message" rows="6" minlength="10" maxlength="3000" required placeholder="How can we help?"></textarea><small><span id="contact-character-count">0</span>/3000</small></div>
+          <label class="contact-consent"><input id="contact-consent" type="checkbox" required /><span>I agree that TripCash may use these details to respond to my message. Read the <button type="button" data-action="open-landing-legal" data-value="privacy">Privacy Policy</button>.</span></label>
+          <div id="contact-turnstile" class="contact-turnstile" role="group" aria-label="Spam protection"></div>
+          <button id="contact-submit" class="landing-primary" type="submit">Send message <span>→</span></button>
+          <p id="contact-status" class="contact-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="landing-final">
+        <div><span>Ready for the next trip?</span><h2>Keep the memories.<br />We’ll handle the maths.</h2></div>
+        <button data-action="enter-web-app" data-value="register">Start using TripCash <span>→</span></button>
+      </section>
+    </main>
+
+    <footer class="landing-footer">
+      <a class="landing-brand" href="#screen-welcome"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="39" cy="25" r="17" fill="#F59E0B"></circle><circle cx="25" cy="39" r="17" fill="#0EA5A0"></circle></svg><span>TripCash</span></a>
+      <p>Travel together. Split smart.</p>
+      <nav aria-label="Legal links"><a href="#contact">Contact</a><button type="button" data-action="open-landing-legal" data-value="privacy">Privacy Policy</button><button type="button" data-action="open-landing-legal" data-value="terms">Terms of Use</button><button type="button" data-analytics-preferences>Cookie settings</button></nav>
+      <small>© 2026 TripCash</small>
+    </footer>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN: AUTH
+  ══════════════════════════════════════ -->
+  <div id="screen-auth" class="screen">
+    <section class="auth-intro" aria-label="TripCash introduction">
+      <div class="auth-intro-copy">
+        <span class="auth-intro-kicker">Shared trips, honest maths.</span>
+        <h1>Travel together.<br />Track every expense.</h1>
+        <p>Everyone pays for something. TripCash works out the rest.</p>
+      </div>
+      <picture><source srcset="assets/tripcash-hero.webp" type="image/webp" /><img src="assets/tripcash-hero.jpg" alt="Friends enjoying a trip together" loading="lazy" decoding="async" width="1448" height="1086" /></picture>
+    </section>
+    <main class="auth-card">
+      <button class="auth-back" data-action="leave-web-app" aria-label="Back">‹ <span>Back</span></button>
+      <div class="auth-logo">
+        <span class="logo auth-logo-text">
+          <svg class="logo-pin" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 0C3.69 0 1 2.69 1 6c0 4.5 6 12 6 12s6-7.5 6-12C13 2.69 10.31 0 7 0z" fill="var(--accent)"/>
+            <rect x="3.5" y="3.5" width="7" height="4.5" rx="1" fill="white" opacity="0.92"/>
+            <circle cx="9" cy="5.75" r="0.9" fill="var(--accent)"/>
+            <rect x="3.5" y="5.5" width="4" height="0.9" rx="0.4" fill="var(--accent)" opacity="0.5"/>
+          </svg>
+          <span class="logo-trip">Trip</span><span class="logo-cash">Cash</span>
+        </span>
+      </div>
+      <p class="auth-tagline" data-i18n="auth.tagline">Travel Together. Split Smart.</p>
+      <p id="invite-preview" class="auth-guest-hint" hidden></p>
+
+      <!-- Login entry -->
+      <div id="auth-login-start">
+        <h1 class="auth-mode-title">Log in</h1>
+        <p class="auth-mode-subtitle">Enter your email to continue.</p>
+        <form id="form-login-email">
+          <div class="form-group">
+            <label for="login-email" data-i18n="auth.label.email">Email</label>
+            <input id="login-email" name="email" type="email" inputmode="email" enterkeyhint="next" data-i18n-ph="auth.ph.email" placeholder="you@email.com" maxlength="254" autocomplete="email" required />
+          </div>
+          <button id="btn-login-continue" type="submit" class="btn btn-primary">Continue</button>
+        </form>
+        <div class="auth-entry-actions">
+          <p>Don’t have an account? <a href="#register" data-auth-switch="register">Create account</a></p>
+          <a href="#guest" data-auth-switch="guest">Continue as guest</a>
+        </div>
+      </div>
+
+      <!-- Password login -->
+      <div id="auth-login" hidden>
+        <button type="button" class="auth-flow-back" data-auth-switch="login" aria-label="Back to email">‹ <span>Back</span></button>
+        <h1 class="auth-mode-title">Welcome back</h1>
+        <p class="auth-mode-subtitle">Log in as <strong id="login-email-preview"></strong>.</p>
+        <form id="form-login">
+          <div class="form-group">
+            <label for="login-pass" data-i18n="auth.label.pass">Password</label>
+            <div class="password-field">
+              <input id="login-pass" name="password" type="password" enterkeyhint="go" data-i18n-ph="auth.ph.pass" placeholder="••••••••" maxlength="128" autocomplete="current-password" required />
+              <button type="button" class="password-toggle" data-password-toggle="login-pass" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+          </div>
+          <button type="button" class="auth-forgot" data-action="open-forgot-password" data-i18n="auth.forgot">Forgot password?</button>
+          <div id="auth-turnstile-login" class="auth-turnstile" role="group" aria-label="Bot protection"></div>
+          <button id="btn-login" type="submit" class="btn btn-primary" data-i18n="auth.btn.login">Log in</button>
+        </form>
+        <button type="button" class="auth-method-switch" data-auth-switch="login-code">Log in with email code instead</button>
+      </div>
+
+      <!-- Email code login -->
+      <div id="auth-login-code" hidden>
+        <button type="button" class="auth-flow-back" data-auth-switch="login-password" aria-label="Back to password login">‹ <span>Back</span></button>
+        <h1 class="auth-mode-title">Log in with email code</h1>
+        <p class="auth-mode-subtitle">Send a login code to <strong id="login-code-email-preview"></strong>.</p>
+        <form id="form-login-code-request">
+          <p class="auth-code-note">No email is sent until you tap the button.</p>
+          <button id="btn-send-login-code" type="submit" class="btn btn-primary">Send email code</button>
+        </form>
+        <p id="login-code-request-status" class="auth-code-status" role="status" aria-live="polite" hidden></p>
+        <form id="form-login-code-verify" hidden>
+          <label class="auth-code-label" for="login-code">Enter the six-digit code</label>
+          <div class="auth-code-control">
+            <input id="login-code" name="login-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="7" pattern="[0-9 -]*" aria-describedby="login-code-error" />
+            <div class="auth-code-boxes login-code-boxes" aria-hidden="true">
+              <span></span><span></span><span></span><i>−</i><span></span><span></span><span></span>
+            </div>
+          </div>
+          <p id="login-code-error" class="form-inline-error" role="alert" hidden></p>
+          <button id="btn-verify-login-code" type="submit" class="btn btn-primary">Verify and log in</button>
+        </form>
+        <div id="login-code-resend" class="auth-code-resend" hidden>
+          <span id="login-code-countdown">Resend in 60 seconds</span>
+          <button id="btn-resend-login-code" type="button" hidden>Resend code</button>
+        </div>
+        <button id="btn-change-login-email" type="button" class="auth-method-switch" data-auth-switch="login">Use a different email</button>
+      </div>
+
+      <!-- Register -->
+      <div id="auth-register" hidden>
+        <button type="button" class="auth-flow-back" data-auth-switch="login" aria-label="Back to login">‹ <span>Back</span></button>
+        <h1 class="auth-mode-title">Create an account</h1>
+        <p class="auth-mode-subtitle">Save your trips and pick up where you left off.</p>
+        <div id="register-feedback" class="auth-feedback" role="status" aria-live="polite" tabindex="-1" hidden>
+          <strong id="register-feedback-title"></strong>
+          <p id="register-status"></p>
+          <div id="register-feedback-actions" class="auth-feedback-actions" hidden>
+            <button type="button" class="btn btn-primary" data-action="switch-auth-tab" data-value="login">Go to login</button>
+            <button type="button" class="btn btn-secondary" data-action="reset-registration">Use another email</button>
+          </div>
+        </div>
+        <form id="form-register">
+          <div class="form-group">
+            <label for="reg-name" data-i18n="auth.label.name">Your name</label>
+            <input id="reg-name" name="name" type="text" enterkeyhint="next" data-i18n-ph="auth.ph.name" placeholder="e.g. Ana" maxlength="40" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-email" data-i18n="auth.label.email">Email</label>
+            <input id="reg-email" name="email" type="email" inputmode="email" enterkeyhint="next" data-i18n-ph="auth.ph.email" placeholder="you@email.com" maxlength="254" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-pass" data-i18n="auth.label.pass">Password</label>
+            <div class="password-field">
+              <input id="reg-pass" name="password" type="password" enterkeyhint="next" placeholder="8+ characters, with a letter and number" minlength="8" maxlength="128" autocomplete="new-password" required />
+              <button type="button" class="password-toggle" data-password-toggle="reg-pass" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reg-pass-confirm">Confirm password</label>
+            <div class="password-field">
+              <input id="reg-pass-confirm" name="password-confirm" type="password" enterkeyhint="go" placeholder="Repeat your password" minlength="8" maxlength="128" autocomplete="new-password" required />
+              <button type="button" class="password-toggle" data-password-toggle="reg-pass-confirm" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+          </div>
+          <label class="terms-check"><input id="reg-terms" type="checkbox" required><span>I confirm that I am at least 16 and agree to the <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a>.</span></label>
+          <div id="auth-turnstile-register" class="auth-turnstile" role="group" aria-label="Bot protection"></div>
+          <button id="btn-register" type="submit" class="btn btn-primary" data-i18n="auth.btn.register">Create account</button>
+        </form>
+        <section id="register-confirmation" class="register-confirmation" hidden>
+          <h2>Check your email</h2>
+          <p>Enter the code sent to <strong id="register-code-email-preview"></strong>.</p>
+          <form id="form-register-code-verify">
+            <label class="auth-code-label" for="register-code">Enter the six-digit code</label>
+            <div class="auth-code-control">
+              <input id="register-code" name="register-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="7" pattern="[0-9 -]*" aria-describedby="register-code-error" />
+              <div class="auth-code-boxes signup-code-boxes" aria-hidden="true">
+                <span></span><span></span><span></span><i>−</i><span></span><span></span><span></span>
+              </div>
+            </div>
+            <p id="register-code-error" class="form-inline-error" role="alert" hidden></p>
+            <button id="btn-verify-register-code" type="submit" class="btn btn-primary">Confirm and continue</button>
+          </form>
+          <div id="register-code-resend" class="auth-code-resend">
+            <span id="register-code-countdown">Resend in 60 seconds</span>
+            <button id="btn-resend-register-code" type="button" hidden>Resend code</button>
+          </div>
+          <div class="register-confirmation-actions">
+            <button type="button" data-action="reset-registration">Use another email</button>
+            <button type="button" data-auth-switch="login">Go to login</button>
+          </div>
+        </section>
+      </div>
+
+      <section id="social-login" aria-label="Social sign-in">
+        <p class="auth-divider"><span>or use email</span></p>
+        <div class="social-login-buttons">
+          <button type="button" class="btn btn-secondary" data-action="social-login" data-value="apple" data-social-provider="apple"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.4 12.6c0-1.8 1.4-2.7 1.5-2.8-.8-1.2-2-1.8-3.3-1.8-1.4 0-2 .7-3.1.7s-1.8-.7-3-.7c-1.5 0-2.8.9-3.6 2.1-1.5 2.5-.4 6.3 1.1 8.3.8 1 1.6 2 2.7 2s1.6-.7 3-.7c1.3 0 1.8.7 3 .7 1.1 0 1.8-1 2.6-2 .8-1 1.1-2 1.2-2.1-1.7-.7-2.6-2.1-2.6-3.7ZM14.6 6.5c.7-.8 1.1-1.8 1-2.8-1 .1-2.1.7-2.8 1.5-.7.8-1.1 1.8-1 2.7 1 .1 2.1-.5 2.8-1.4Z"/></svg>Continue with Apple</button>
+          <button type="button" class="btn btn-secondary" data-action="social-login" data-value="google" data-social-provider="google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2.1H12v4h5.4a4.6 4.6 0 0 1-2 3v2.5h3.3c1.9-1.8 2.9-4.3 2.9-7.4Z"/><path fill="#34A853" d="M12 22c2.7 0 5-1 6.7-2.7l-3.3-2.5c-.9.6-2.1 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3v2.6A10 10 0 0 0 12 22Z"/><path fill="#FBBC05" d="M6.4 13.7a6 6 0 0 1 0-3.4V7.7H3a10 10 0 0 0 0 8.6l3.4-2.6Z"/><path fill="#EA4335" d="M12 6.2c1.4 0 2.6.5 3.6 1.4l3-3A9.6 9.6 0 0 0 12 2a10 10 0 0 0-9 5.7l3.4 2.6C7.2 8 9.4 6.2 12 6.2Z"/></svg>Continue with Google</button>
+        </div>
+        <p id="social-terms-notice" class="social-terms-notice">By continuing with Apple or Google, you confirm that you are at least 16 and agree to the <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a>.</p>
+      </section>
+
+      <!-- Guest -->
+      <div id="auth-guest" hidden>
+        <button type="button" class="auth-flow-back" data-auth-switch="login" aria-label="Back to login">‹ <span>Back</span></button>
+        <h1 class="auth-mode-title">Continue as guest</h1>
+        <p class="auth-guest-hint" data-i18n="auth.guest.hint">
+          Start a trip without an account. You can save it later.
+        </p>
+        <ul class="auth-guest-details">
+          <li>No email or password is required.</li>
+          <li>You can create trips and record expenses normally.</li>
+          <li>Save the guest account before changing devices, logging out, or clearing app data.</li>
+        </ul>
+        <div class="form-group">
+          <label for="guest-name" data-i18n="auth.label.name">Your name</label>
+          <input id="guest-name" type="text" data-i18n-ph="auth.ph.name" placeholder="e.g. Ana" maxlength="40" />
+        </div>
+        <div id="auth-turnstile-guest" class="auth-turnstile" role="group" aria-label="Bot protection"></div>
+        <button id="btn-guest" class="btn btn-primary" data-action="handle-guest-start" data-i18n="auth.btn.guest">Continue as guest</button>
+      </div>
+      <nav class="legal-links" aria-label="Legal">
+        <a href="support.html">Support</a>
+        <span aria-hidden="true">·</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <span aria-hidden="true">·</span>
+        <a href="terms.html">Terms of Use</a>
+      </nav>
+    </main>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN: LOADING (Splash)
+  ══════════════════════════════════════ -->
+  <div id="screen-loading" class="screen">
+    <div class="splash-logo">
+      <span class="logo splash-logo-text">
+        <svg class="logo-pin" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 0C3.69 0 1 2.69 1 6c0 4.5 6 12 6 12s6-7.5 6-12C13 2.69 10.31 0 7 0z" fill="white"/>
+          <rect x="3.5" y="3.5" width="7" height="4.5" rx="1" fill="#14BBA6"/>
+          <circle cx="9" cy="5.75" r="0.9" fill="white"/>
+          <rect x="3.5" y="5.5" width="4" height="0.9" rx="0.4" fill="white" opacity="0.6"/>
+        </svg>
+        <span class="logo-trip">Trip</span><span class="logo-cash">Cash</span>
+      </span>
+      <p class="splash-tagline" data-i18n="splash.tagline">Travel Together. Split Smart.</p>
+    </div>
+    <div class="spinner splash-spinner"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN: NOT FOUND
+  ══════════════════════════════════════ -->
+  <div id="screen-not-found" class="screen">
+    <div class="notfound-icon">🗺️</div>
+    <h2 data-i18n="notfound.title">Trip not found</h2>
+    <p data-i18n="notfound.sub">This link may be wrong or the trip was deleted.</p>
+    <button class="btn btn-secondary btn-not-found" data-action="go-to-trips" data-i18n="notfound.btn">← My trips</button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN: TRIPS DASHBOARD
+  ══════════════════════════════════════ -->
+  <div id="screen-trips" class="screen">
+
+    <header class="app-header">
+      <div class="header-left">
+        <span class="logo">
+          <svg class="logo-pin" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 0C3.69 0 1 2.69 1 6c0 4.5 6 12 6 12s6-7.5 6-12C13 2.69 10.31 0 7 0z" fill="var(--accent)"/>
+            <rect x="3.5" y="3.5" width="7" height="4.5" rx="1" fill="white" opacity="0.92"/>
+            <circle cx="9" cy="5.75" r="0.9" fill="var(--accent)"/>
+            <rect x="3.5" y="5.5" width="4" height="0.9" rx="0.4" fill="var(--accent)" opacity="0.5"/>
+          </svg>
+          <span class="logo-trip">Trip</span><span class="logo-cash">Cash</span>
+        </span>
+      </div>
+      <div class="header-right">
+        <button id="btn-theme" class="btn-icon-round" title="Theme: system" aria-label="Change color theme" data-action="toggle-theme">◐</button>
+        <span class="header-user" id="header-user-label"></span>
+        <button class="btn-icon-round" title="Account settings" data-action="open-account-settings">👤</button>
+        <button class="btn btn-secondary btn-sm btn-auto" data-action="handle-logout" data-i18n="header.logout">Log out</button>
+      </div>
+    </header>
+
+    <!-- Guest banner -->
+    <div id="guest-banner" class="guest-banner guest-banner-app" hidden>
+      <span data-i18n="guest.banner">You're in guest mode — save your trips by creating an account.</span>
+      <button data-action="open-modal" data-value="modal-guest-upgrade" data-i18n="guest.btn">Save account</button>
+    </div>
+
+    <div class="trips-content">
+      <div id="trips-greeting" class="trips-greeting"></div>
+
+      <!-- Stats row -->
+      <div class="stats-row">
+        <div class="stat-tile">
+          <span class="stat-tile-icon">✈️</span>
+          <div class="stat-tile-num" id="stat-total-trips">—</div>
+          <div class="stat-tile-label" data-i18n="stat.total">Total trips</div>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile-icon">🟢</span>
+          <div class="stat-tile-num" id="stat-active-trips">—</div>
+          <div class="stat-tile-label" data-i18n="stat.active">Active</div>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile-icon">✅</span>
+          <div class="stat-tile-num" id="stat-ended-trips">—</div>
+          <div class="stat-tile-label" data-i18n="stat.ended">Ended</div>
+        </div>
+      </div>
+
+      <div class="section-hdr">
+        <h2 data-i18n="trips.title">My trips</h2>
+        <div class="trips-section-actions">
+          <span id="offline-sync-status" class="offline-sync-status" role="status" aria-live="polite" hidden></span>
+          <button id="btn-sync-now" class="btn btn-secondary btn-sm btn-auto" data-action="sync-offline-now" hidden>Sync now</button>
+          <button id="btn-review-sync" class="btn btn-secondary btn-sm btn-auto" data-action="review-offline-changes" hidden>Review pending changes</button>
+          <button class="btn btn-primary btn-sm btn-auto" data-action="open-new-trip-modal" data-i18n="trips.new">+ New trip</button>
+        </div>
+      </div>
+      <div id="trips-list"></div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN: TRIP DASHBOARD
+  ══════════════════════════════════════ -->
+  <div id="screen-dashboard" class="screen">
+
+    <header class="mobile-shell-header" aria-label="TripCash">
+      <span class="logo"><span class="logo-trip">Trip</span><span class="logo-cash">Cash</span></span>
+    </header>
+
+    <div class="dash-header">
+      <div class="dash-top">
+        <button class="btn-back" data-action="go-to-trips" data-i18n="back">← Trips</button>
+        <span class="dash-title" id="dash-trip-name"></span>
+        <span class="day-badge" id="dash-day-badge">Day 1</span>
+      </div>
+    </div>
+
+    <div class="dash-content">
+      <div id="tab-overview"  class="tab-panel active"></div>
+      <div id="tab-expenses"  class="tab-panel"></div>
+      <div id="tab-analytics" class="tab-panel"></div>
+      <div id="tab-members"   class="tab-panel"></div>
+      <div id="tab-activity"  class="tab-panel"></div>
+    </div>
+
+  </div>
+
+  <div id="screen-global-analytics" class="screen">
+    <header class="mobile-shell-header" aria-label="TripCash">
+      <span class="logo"><span class="logo-trip">Trip</span><span class="logo-cash">Cash</span></span>
+    </header>
+    <header class="profile-header global-analytics-header">
+      <span></span>
+      <span class="dash-title">All Trips Analytics</span>
+      <span></span>
+    </header>
+    <main id="global-analytics-content" class="global-analytics-content"></main>
+  </div>
+
+  <div id="screen-profile" class="screen">
+    <header class="mobile-shell-header" aria-label="TripCash">
+      <span class="logo"><span class="logo-trip">Trip</span><span class="logo-cash">Cash</span></span>
+    </header>
+    <header class="profile-header">
+      <button class="btn-back" data-action="return-from-profile">← Back</button>
+      <span class="dash-title">Profile</span>
+      <span></span>
+    </header>
+    <main id="profile-content" class="profile-content"></main>
+  </div>
+
+  <div id="native-refresh-indicator" class="native-refresh-indicator" role="status" aria-live="polite" hidden>
+    <span class="native-refresh-spinner" aria-hidden="true"></span>
+    <span id="native-refresh-label">Pull to refresh</span>
+  </div>
+
+  <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Primary navigation">
+    <button data-nav="trips" data-action="go-to-trips"><span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12.5" rx="2.5"></rect><path d="M8 7.5V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5v2"></path></svg></span><b>Trips</b></button>
+    <button data-nav="analytics" data-action="open-analytics-view"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 20h16M7 20v-6M12 20V7M17 20v-9"></path></svg></span><b>Analytics</b></button>
+    <button data-nav="profile" data-action="open-profile-view"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"></circle><path d="M5.5 20c0-3.7 2.9-5.6 6.5-5.6s6.5 1.9 6.5 5.6"></path></svg></span><b>Profile</b></button>
+  </nav>
+
+  <nav id="trip-bottom-nav" class="app-bottom-nav trip-bottom-nav" aria-label="Trip navigation">
+    <button class="active" data-tab="expenses" data-action="switch-tab" data-value="expenses"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-2.5-1.5L13 21l-2.5-1.5L8 21l-2-1.2z"></path><path d="M9 8h6M9 12h6"></path></svg></span><b>Expenses</b></button>
+    <button data-tab="members" data-action="switch-tab" data-value="members"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="9" r="2.3"></circle><path d="M3.5 20c0-3.6 2.4-5.5 5.5-5.5s5.5 1.9 5.5 5.5M14 15.5c3.6-.6 6.5 1 6.5 4.5"></path></svg></span><b>Balances</b></button>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       MODAL: NEW TRIP
+  ══════════════════════════════════════ -->
+  <div id="modal-new-trip" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span id="trip-modal-title" class="modal-title" data-i18n="modal.trip.title">New trip</span>
+        <button class="modal-close" data-action="close-modal" data-value="modal-new-trip">✕</button>
+      </div>
+      <form id="form-new-trip" novalidate>
+        <fieldset class="form-group trip-emoji-field">
+          <legend data-i18n="modal.trip.emoji">Trip emoji</legend>
+          <div class="emoji-picker" id="emoji-picker"></div>
+        </fieldset>
+        <div class="form-group">
+          <label for="trip-name" data-i18n="modal.trip.name">Trip name</label>
+          <input id="trip-name" type="text" data-i18n-ph="modal.trip.ph" placeholder="e.g. Weekend Trip" maxlength="60" minlength="3" required />
+        </div>
+        <div class="form-group">
+          <label for="trip-currency">Trip currency</label>
+          <select id="trip-currency">
+            <option value="EUR" selected>EUR - Euro</option>
+            <option value="USD">USD - US dollar</option>
+            <option value="CHF">CHF - Swiss franc</option>
+            <option value="GBP">GBP - British pound</option>
+            <option value="ALL">ALL - Albanian lek</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="trip-budget">Budget (Optional)</label>
+          <input id="trip-budget" type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]{1,2})?" maxlength="13" placeholder="0.00" autocomplete="off" />
+        </div>
+        <div class="trip-date-fields">
+          <div class="form-group">
+            <label for="trip-start-date">Start date (Optional)</label>
+            <input id="trip-start-date" type="date" />
+          </div>
+          <div class="form-group">
+            <label for="trip-end-date">End date (Optional)</label>
+            <input id="trip-end-date" type="date" />
+          </div>
+        </div>
+        <button id="btn-create-trip" type="submit" class="btn btn-primary" data-i18n="modal.trip.btn">Create trip</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCREEN: ADD EXPENSE
+  ══════════════════════════════════════ -->
+  <div id="screen-expense" class="screen expense-screen">
+    <div class="expense-page">
+      <div class="modal-hdr">
+        <span class="modal-title" data-i18n="modal.exp.title">Add expense</span>
+        <button class="modal-close" data-action="close-expense-screen" aria-label="Close expense screen">✕</button>
+      </div>
+      <p id="expense-receipt-draft-notice" class="expense-receipt-draft-notice" role="status" hidden></p>
+      <form id="form-add-expense">
+        <div class="expense-amount-card">
+          <label for="exp-amount">Amount</label>
+          <div class="amount-currency-row">
+            <span id="exp-currency-symbol">€</span>
+            <input id="exp-amount" type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]{1,2})?" maxlength="11" placeholder="0.00" autocomplete="off" required />
+            <label class="visually-hidden" for="exp-currency">Currency</label>
+            <select id="exp-currency" data-change-action="update-expense-currency">
+              <option value="EUR">EUR</option><option value="USD">USD</option><option value="CHF">CHF</option><option value="GBP">GBP</option><option value="ALL">ALL</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group expense-title-group">
+          <label for="exp-title" data-i18n="modal.exp.what">What was it?</label>
+          <input id="exp-title" type="text" data-i18n-ph="modal.exp.what.ph" placeholder="e.g. Dinner, Taxi, Hotel" maxlength="80" required />
+        </div>
+        <div class="form-group expense-category-group">
+          <label for="exp-category" data-i18n="modal.exp.cat">Category</label>
+          <select id="exp-category" class="visually-hidden" aria-hidden="true" tabindex="-1">
+            <option value="food">🍔 Food</option>
+            <option value="drinks">🍺 Drinks</option>
+            <option value="transport">🚗 Transport</option>
+            <option value="hotel">🏨 Hotel</option>
+            <option value="activities">🎭 Activities</option>
+            <option value="other" selected>📦 Other</option>
+          </select>
+          <div id="expense-category-grid" class="expense-category-grid">
+            <button type="button" data-category="hotel" data-action="select-expense-category" data-value="hotel"><i>▰</i><span>Stay</span></button>
+            <button type="button" data-category="transport" data-action="select-expense-category" data-value="transport"><i>↗</i><span>Transport</span></button>
+            <button type="button" data-category="food" data-action="select-expense-category" data-value="food"><i>●</i><span>Food</span></button>
+            <button type="button" data-category="activities" data-action="select-expense-category" data-value="activities"><i>◇</i><span>Activities</span></button>
+            <button type="button" data-category="drinks" data-action="select-expense-category" data-value="drinks"><i>◡</i><span>Drinks</span></button>
+            <button type="button" data-category="other" data-action="select-expense-category" data-value="other"><i>•••</i><span>Other</span></button>
+          </div>
+        </div>
+        <div class="expense-detail-rows">
+          <div class="form-group">
+            <label for="exp-day" data-i18n="modal.exp.day">Trip day</label>
+            <input id="exp-day" type="number" min="1" value="1" />
+          </div>
+          <div class="form-group">
+            <label for="exp-paid-by" data-i18n="modal.exp.paidby">Paid by</label>
+            <select id="exp-paid-by" class="visually-hidden" aria-hidden="true" tabindex="-1"></select>
+            <div id="expense-payer-chips" class="expense-payer-chips"></div>
+          </div>
+        </div>
+        <div class="form-group expense-split-group">
+          <label data-i18n="modal.exp.split">Split type</label>
+          <div class="split-type-row">
+            <button type="button" class="split-type-btn active" data-type="equal" data-action="set-split-type" data-value="equal" data-i18n="split.equal">Equal</button>
+            <button type="button" class="split-type-btn" data-type="exact" data-action="set-split-type" data-value="exact" data-i18n="split.exact">Exact</button>
+          </div>
+          <div id="split-section"></div>
+        </div>
+        <div class="form-group expense-note-group">
+          <label for="exp-note" data-i18n="modal.exp.note">Note (optional)</label>
+          <input id="exp-note" type="text" data-i18n-ph="modal.exp.note.ph" placeholder="e.g. Cash payment" maxlength="200" />
+        </div>
+        <button id="btn-add-expense" type="submit" class="btn btn-primary" data-i18n="modal.exp.btn">Add expense</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MODAL: SETTLE DAY
+  ══════════════════════════════════════ -->
+  <div id="modal-settle-day" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span class="modal-title" id="settle-day-label">Settle Day</span>
+        <button class="modal-close" data-action="close-modal" data-value="modal-settle-day">✕</button>
+      </div>
+      <form id="form-settle-day">
+        <p id="settle-day-description" class="modal-desc" data-i18n="modal.settle.desc">
+          Mark this day as settled. Balances are frozen for the day. This can't be undone.
+        </p>
+        <div class="form-group">
+          <label for="settle-note" data-i18n="modal.settle.note">Note (optional)</label>
+          <input id="settle-note" type="text" data-i18n-ph="modal.settle.ph" placeholder="e.g. paid cash at airport" maxlength="200" />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary modal-action" data-action="close-modal" data-value="modal-settle-day" data-i18n="modal.settle.cancel">Cancel</button>
+          <button id="btn-settle-day" type="submit" class="btn btn-primary modal-action" data-i18n="modal.settle.btn">Settle day</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MODAL: END TRIP
+  ══════════════════════════════════════ -->
+  <div id="modal-end-trip" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span class="modal-title" data-i18n="modal.end.title">End trip?</span>
+        <button class="modal-close" data-action="close-modal" data-value="modal-end-trip">✕</button>
+      </div>
+      <form id="form-end-trip">
+        <p class="modal-desc" data-i18n="modal.end.desc">
+          This locks the trip. No more expenses can be added. You can still view everything and export.
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary modal-action" data-action="close-modal" data-value="modal-end-trip" data-i18n="modal.end.cancel">Cancel</button>
+          <button id="btn-end-trip" type="submit" class="btn btn-danger modal-action" data-i18n="modal.end.btn">End trip</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MODAL: RECORD PAYMENT
+  ══════════════════════════════════════ -->
+  <div id="modal-payment" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span class="modal-title" data-i18n="modal.pay.title">Mark as paid</span>
+        <button class="modal-close" data-action="close-modal" data-value="modal-payment">✕</button>
+      </div>
+      <form id="form-payment">
+        <p id="payment-desc" class="payment-desc"></p>
+        <div class="form-group">
+          <label for="payment-amount" data-i18n="modal.pay.amount">Amount paid</label>
+          <input id="payment-amount" type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]{1,2})?" maxlength="11" autocomplete="off" required />
+        </div>
+        <div class="form-group">
+          <label for="payment-note" data-i18n="modal.pay.note">Note (optional)</label>
+          <input id="payment-note" type="text" data-i18n-ph="modal.pay.ph" placeholder="e.g. paid cash at airport" maxlength="200" />
+        </div>
+        <button id="btn-record-payment" type="submit" class="btn btn-primary" data-i18n="modal.pay.btn">Record payment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MODAL: ACCOUNT SETTINGS
+  ══════════════════════════════════════ -->
+  <div id="modal-account" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span id="account-modal-title" class="modal-title" data-i18n="modal.acc.title">Personal details</span>
+        <button class="modal-close" data-action="close-modal" data-value="modal-account">✕</button>
+      </div>
+      <section id="settings-profile" class="settings-section" aria-labelledby="settings-profile-title">
+        <h2 id="settings-profile-title">Profile</h2>
+      <form id="form-account" novalidate>
+        <div class="form-group">
+          <label for="settings-name" data-i18n="modal.acc.name">Display name</label>
+          <input id="settings-name" type="text" data-i18n-ph="modal.acc.name.ph" placeholder="Your name" maxlength="40" required />
+        </div>
+        <div class="form-group">
+          <label for="settings-email" data-i18n="modal.acc.email">Email</label>
+          <input id="settings-email" class="disabled-field" type="email" disabled />
+        </div>
+        <div class="form-group">
+          <label for="settings-paypal" data-i18n="modal.acc.paypal">PayPal.me link (Optional)</label>
+          <input id="settings-paypal" type="url" maxlength="255" placeholder="https://paypal.me/yourname" />
+        </div>
+        <button id="btn-save-account" type="submit" class="btn btn-primary" data-i18n="modal.acc.btn">Save settings</button>
+      </form>
+      </section>
+      <section id="settings-security" class="settings-section" aria-labelledby="settings-security-title">
+        <h2 id="settings-security-title">Change email</h2>
+        <form id="form-change-email" class="settings-subform">
+          <div class="form-group">
+            <label for="settings-current-email">Current email</label>
+            <input id="settings-current-email" class="disabled-field" type="email" disabled />
+          </div>
+          <div class="form-group">
+            <label for="settings-new-email">New email</label>
+            <input id="settings-new-email" type="email" maxlength="254" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label for="settings-confirm-email">Confirm new email</label>
+            <input id="settings-confirm-email" type="email" maxlength="254" autocomplete="email" required />
+          </div>
+          <p class="settings-help">TripCash will send confirmation messages before changing your sign-in email.</p>
+          <button id="btn-change-email" type="submit" class="btn btn-secondary btn-full">Change email</button>
+        </form>
+      </section>
+      <section id="settings-data-delete" class="settings-section" aria-labelledby="settings-data-title">
+        <h2 id="settings-data-title">Delete my data</h2>
+        <p class="settings-help">Delete your profile details, contacts, memberships, and personal attribution while keeping your sign-in account. Trips you created will be ended and retained without an owner.</p>
+        <div class="form-group">
+          <label for="delete-data-email">Enter your account email to confirm</label>
+          <input id="delete-data-email" type="email" maxlength="254" autocomplete="email" />
+        </div>
+        <button id="btn-delete-data" type="button" class="btn btn-secondary btn-full" data-action="delete-account-data">Delete my data</button>
+      </section>
+      <section id="settings-close" class="settings-section settings-danger-zone" aria-labelledby="settings-close-title">
+        <h2 id="settings-close-title">Close account</h2>
+        <p class="modal-desc" data-i18n="modal.acc.delete.desc">Permanently delete your account and personal data. Shared trip records will be anonymized.</p>
+        <div id="delete-account-email-group" class="form-group">
+          <label for="delete-account-email">Enter your account email to confirm</label>
+          <input id="delete-account-email" type="email" maxlength="254" autocomplete="email" />
+        </div>
+        <p id="delete-account-apple-confirmation" class="settings-help" hidden>You may be asked to confirm with Apple or sign in again before this account is permanently deleted.</p>
+        <button id="btn-delete-account" type="button" class="btn btn-danger btn-full" data-action="delete-account" data-i18n="modal.acc.delete.btn">Delete account</button>
+      </section>
+      <nav class="legal-links" aria-label="Legal">
+        <a href="support.html">Support</a>
+        <span aria-hidden="true">·</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <span aria-hidden="true">·</span>
+        <a href="terms.html">Terms of Use</a>
+      </nav>
+    </div>
+  </div>
+
+  <div id="modal-forgot-password" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span class="modal-title" data-i18n="password.forgot.title">Reset password</span>
+        <button class="modal-close" data-action="close-modal" data-value="modal-forgot-password">✕</button>
+      </div>
+      <p class="modal-desc" data-i18n="password.forgot.desc">Enter your email and we will send you a secure password-reset link.</p>
+      <form id="form-forgot-password">
+        <div class="form-group">
+          <label for="forgot-email" data-i18n="auth.label.email">Email</label>
+          <input id="forgot-email" type="email" data-i18n-ph="auth.ph.email" placeholder="you@email.com" maxlength="254" autocomplete="email" required />
+        </div>
+        <div id="auth-turnstile-recovery" class="auth-turnstile" role="group" aria-label="Bot protection"></div>
+        <button id="btn-forgot-password" type="submit" class="btn btn-primary" data-i18n="password.forgot.btn">Send reset link</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-new-password" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span class="modal-title" data-i18n="password.new.title">Choose a new password</span>
+        <button id="btn-close-new-password" type="button" class="modal-close" data-action="close-modal" data-value="modal-new-password" hidden>✕</button>
+      </div>
+      <p class="modal-desc" data-i18n="password.new.desc">Use at least 8 characters, including a letter and a number.</p>
+      <form id="form-new-password">
+        <div id="current-password-group" class="form-group" hidden>
+          <label for="current-password">Current password</label>
+          <input id="current-password" type="password" maxlength="128" autocomplete="current-password" />
+        </div>
+        <div id="auth-turnstile-reauth" class="auth-turnstile" role="group" aria-label="Bot protection"></div>
+        <div class="form-group">
+          <label for="new-password" data-i18n="password.new.label">New password</label>
+          <input id="new-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required />
+        </div>
+        <div class="form-group">
+          <label for="new-password-confirm" data-i18n="password.confirm.label">Confirm password</label>
+          <input id="new-password-confirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required />
+        </div>
+        <button id="btn-new-password" type="submit" class="btn btn-primary" data-i18n="password.new.btn">Update password</button>
+        <button id="btn-cancel-password-recovery" type="button" class="auth-recovery-cancel" data-action="cancel-password-recovery" hidden>Cancel and sign out</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-member-edit" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span class="modal-title" id="member-edit-title">Edit member</span>
+        <button class="modal-close" data-action="close-modal" data-value="modal-member-edit">✕</button>
+      </div>
+      <form id="form-member-edit">
+        <div class="form-group">
+          <label for="member-edit-value" id="member-edit-label">Value</label>
+          <input id="member-edit-value" type="text" maxlength="120" required />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary modal-action" data-action="close-modal" data-value="modal-member-edit">Cancel</button>
+          <button id="btn-member-edit-save" type="submit" class="btn btn-primary modal-action">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-confirm" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span class="modal-title" id="confirm-title">Confirm</span>
+        <button class="modal-close" data-action="resolve-confirm" data-value="false">✕</button>
+      </div>
+      <p class="modal-desc" id="confirm-message"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary modal-action" data-action="resolve-confirm" data-value="false">Cancel</button>
+        <button id="confirm-ok" type="button" class="btn btn-primary modal-action" data-action="resolve-confirm" data-value="true">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-email-confirmed" class="modal" role="dialog" aria-modal="true" aria-labelledby="email-confirmed-title">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span class="modal-title" id="email-confirmed-title">Email confirmed</span>
+        <button class="modal-close" data-action="close-modal" data-value="modal-email-confirmed" aria-label="Close">✕</button>
+      </div>
+      <p class="modal-desc">Your email is confirmed. You’re signed in and ready to use TripCash.</p>
+      <button type="button" class="btn btn-primary btn-full" data-action="close-modal" data-value="modal-email-confirmed">Continue to TripCash</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MODAL: GUEST UPGRADE
+  ══════════════════════════════════════ -->
+  <div id="modal-guest-upgrade" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <span class="modal-title" data-i18n="modal.upgrade.title">Save your account</span>
+        <button class="modal-close" data-action="close-modal" data-value="modal-guest-upgrade">✕</button>
+      </div>
+      <p class="modal-desc" data-i18n="modal.upgrade.desc">
+        Verify your email first, then choose a password. Your guest trips will stay with you.
+      </p>
+      <form id="form-guest-upgrade">
+        <div class="form-group">
+          <label for="upgrade-name" data-i18n="modal.upgrade.name">Your name</label>
+          <input id="upgrade-name" type="text" data-i18n-ph="modal.upgrade.name.ph" placeholder="e.g. Ana" maxlength="40" required />
+        </div>
+        <div class="form-group">
+          <label for="upgrade-email" data-i18n="modal.upgrade.email">Email</label>
+          <input id="upgrade-email" type="email" data-i18n-ph="auth.ph.email" placeholder="you@email.com" maxlength="254" autocomplete="email" required />
+        </div>
+        <button id="btn-upgrade" type="submit" class="btn btn-primary" data-i18n="modal.upgrade.btn">Send verification email</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="modal-web-join" class="modal" role="dialog" aria-modal="true" aria-labelledby="web-join-title">
+    <div class="modal-sheet">
+      <div class="modal-hdr"><h2 id="web-join-title">Join with invite link</h2><button class="modal-close" aria-label="Close" data-action="close-modal" data-value="modal-web-join">✕</button></div>
+      <form id="form-web-join">
+        <div class="form-group"><label for="web-invite-link">TripCash invite link</label><input id="web-invite-link" type="url" placeholder="https://tripcash.de/app?invite=…" maxlength="2048" autocomplete="off" aria-describedby="web-invite-error" required /></div>
+        <p id="web-invite-error" class="web-invite-error" role="status"></p>
+        <button class="btn btn-primary" type="submit">Join trip</button>
+      </form>
+    </div>
+  </div>
+  <div id="toast" class="toast"></div>
+
+  <dialog id="landing-legal-dialog" class="landing-legal-dialog" aria-labelledby="landing-legal-title">
+    <div class="landing-legal-header"><h2 id="landing-legal-title">Legal information</h2><button type="button" data-action="close-landing-legal" aria-label="Close">×</button></div>
+    <div id="landing-legal-content" class="landing-legal-content"><p>Loading…</p></div>
+  </dialog>
+
+  <script defer src="scripts/landing.js?v=20261006-1"></script>
+  <script defer src="scripts/supabase.js?v=20260922-45"></script>
+  <script defer src="scripts/offline.js?v=20260908-38"></script>
+  <script defer src="scripts/app.js?v=20261009-2"></script>
+  <script defer src="scripts/auth.js?v=20261009-1"></script>
+  <!-- web-only:start -->
+  <script defer src="scripts/web-shell.js?v=20261005-1"></script>
+  <script defer src="scripts/web-dashboard.js?v=20261005-1"></script>
+  <script defer src="scripts/web-workspace.js?v=20261010-1"></script>
+  <script defer src="scripts/web-expense.js?v=20260929-3"></script>
+  <script defer src="scripts/analytics.js?v=20260930-1"></script>
+  <!-- web-only:end -->
+
+</body>
+</html>

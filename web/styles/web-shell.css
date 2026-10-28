@@ -1,0 +1,905 @@
+/* Web redesign, Stage 1. Omitted from native bundles until native adaptation. */
+body.web-redesign {
+  --bg-subtle: #091F1E;
+  --border: #1E3E3B;
+  --border-strong: #2B4E4B;
+  --accent-text: #4FD1CB;
+  --accent-bg: #0F3D3A;
+  --primary: #0B7C78;
+  --amber: #F59E0B;
+  --amber-text: #FBBF24;
+  --amber-bg: #3A2C10;
+  --danger: #FF8A7A;
+  --danger-bg: #3A1E1B;
+  --danger-solid: #B42318;
+  --track: #1C3B38;
+  --r-el: 9px;
+  --shadow-lg: 0 24px 64px rgba(0,0,0,.28);
+  background-image: none;
+}
+body.web-redesign.light {
+  --bg-subtle: #FAFAFA;
+  --text-2: #5E6E6C;
+  --border: #ECECE8;
+  --border-strong: #D9DCD6;
+  --accent-text: #0B7C78;
+  --accent-bg: #E6F6F4;
+  --amber-text: #A8540A;
+  --amber-bg: #FEF3E2;
+  --danger: #B42318;
+  --danger-bg: #FDECEA;
+  --track: #EDEFEB;
+  --shadow: 0 1px 2px rgba(11,43,42,.04), 0 6px 20px rgba(11,43,42,.05);
+}
+.web-redesign :is(button, a, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.web-redesign a { color: var(--accent-text); }
+.web-redesign :is(input, select, textarea) { border-color: var(--border-strong); border-radius: 9px; }
+.web-redesign .btn-primary { background: var(--primary); }
+.web-redesign .btn-primary:hover:not(:disabled) { background: #075E5B; }
+.web-redesign .btn-danger { color: #FFF; background: var(--danger-solid); border-color: var(--danger-solid); }
+.web-redesign .btn-danger:hover:not(:disabled) { background: #8E1B12; }
+.web-redesign :is(.stat-tile-num, .ov-tile-val, .trip-total, .amount-currency-row input) {
+  font-variant-numeric: tabular-nums;
+}
+.web-redesign .stat-tile-icon { display: none; }
+.web-redesign :is(.trips-content, .dash-content, .global-analytics-content, .profile-content) {
+  width: min(1200px, 100%);
+  margin-inline: auto;
+  padding: 28px 36px 100px;
+}
+.web-redesign #screen-trips .app-header { display: none; }
+.web-redesign .mobile-shell-header { display: none; }
+.web-topbar[hidden], .web-topbar [hidden] { display: none !important; }
+.web-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 70;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+}
+.web-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: 700 17px var(--heading);
+  white-space: nowrap;
+}
+.web-brand-mark { position: relative; width: 24px; height: 24px; flex: 0 0 24px; }
+.web-brand-mark::before, .web-brand-mark::after { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; }
+.web-brand-mark::before { right: 0; top: 0; background: #F59E0B; }
+.web-brand-mark::after { left: 0; bottom: 0; background: #0EA5A0; }
+.web-main-nav { display: flex; gap: 4px; flex-shrink: 0; }
+.web-main-nav button {
+  padding: 0 12px;
+  min-height: 36px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--text);
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+}
+.web-main-nav button[aria-current="page"] { background: var(--accent-bg); color: var(--accent-text); }
+.web-main-nav button:hover, .web-dropdown button:hover { background: var(--accent-bg); }
+.web-topbar-spacer { flex: 1; }
+.web-disclosure { position: relative; flex-shrink: 0; }
+.web-disclosure summary { display: flex; align-items: center; cursor: pointer; list-style: none; }
+.web-disclosure summary::-webkit-details-marker { display: none; }
+.web-trip-switcher summary {
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.web-trip-name { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.web-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.web-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 240px;
+  padding: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg);
+  max-height: min(400px, 65dvh);
+  overflow: auto;
+}
+.web-trip-switcher .web-dropdown { left: 0; right: auto; }
+.web-dropdown button {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  font-size: 14px;
+}
+.web-dropdown button[aria-current="true"] { background: var(--accent-bg); color: var(--accent-text); }
+.web-account-name { padding: 8px 12px 12px; border-bottom: 1px solid var(--border); font-weight: 600; overflow-wrap: anywhere; }
+.web-avatar { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--primary); color: #FFF; font: 700 12px var(--heading); }
+.web-sync { display: flex; align-items: center; gap: 7px; min-height: 30px; color: var(--text-2); font-size: 12.5px; white-space: nowrap; }
+.web-sync[data-state="pending"], .web-sync[data-state="offline"], .web-sync[data-state="error"] { padding: 0 10px; border-radius: 999px; color: var(--amber-text); background: var(--amber-bg); }
+.web-sync:not([data-state="synced"]) .web-status-dot { background: var(--amber); }
+.web-sync button { min-height: 36px; padding: 0 4px; color: inherit; background: transparent; border: 0; font-size: inherit; font-weight: 600; }
+.web-sync .offline-sync-status { margin: 0; padding: 0; border: 0; background: transparent; color: inherit; }
+.web-topbar .web-new-trip { width: auto; flex: 0 0 auto; min-height: 36px; padding: 0 14px; border-radius: 9px; font-size: 13.5px; white-space: nowrap; box-shadow: none; }
+.web-redesign .dash-header { position: static; background: transparent; border: 0; }
+.web-redesign .dash-top { max-width: 1200px; margin: auto; padding: 22px 36px 12px; }
+.web-redesign #trip-bottom-nav {
+  position: static;
+  transform: none;
+  width: auto;
+  max-width: none;
+  min-height: 44px;
+  height: auto;
+  margin: 0 36px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  justify-content: flex-start;
+}
+.web-redesign #trip-bottom-nav button { flex: 0 0 auto; min-height: 44px; padding: 0 14px; border-radius: 0; color: var(--text-2); border-bottom: 2px solid transparent; }
+.web-redesign #trip-bottom-nav.visible { display: flex; }
+.web-redesign #trip-bottom-nav .nav-icon { display: none; }
+.web-redesign #trip-bottom-nav button.active { background: transparent; border-bottom-color: var(--accent); color: var(--accent-text); }
+.web-redesign #trip-bottom-nav button b { font-size: 14px; }
+.web-redesign #screen-dashboard { max-width: 1200px; margin: auto; }
+@media (min-width: 761px) {
+  .web-redesign #app-bottom-nav { display: none !important; }
+  .web-redesign #screen-trips .trips-section-actions > [data-action="open-new-trip-modal"] { display: none; }
+  .web-redesign :is(.btn, input, select) { min-height: 40px; }
+  .web-redesign #trip-bottom-nav { bottom: auto; }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .web-topbar { gap: 12px; padding: 0 16px; flex-wrap: wrap; padding-block: 10px; }
+  .web-trip-name { max-width: 130px; }
+}
+@media (max-width: 760px) {
+  .web-topbar { position: static; min-height: 56px; padding: 8px 16px; gap: 12px; }
+  .web-main-nav, .web-topbar .web-trip-switcher, .web-topbar .web-new-trip { display: none !important; }
+  .web-topbar .web-sync { font-size: 11px; gap: 5px; }
+  .web-topbar .web-sync button { min-height: 44px; }
+  .web-redesign :is(.trips-content, .dash-content, .global-analytics-content, .profile-content) { padding: 20px 16px 100px; }
+  .web-redesign .dash-top { padding: 16px; gap: 10px; }
+  .web-redesign #trip-bottom-nav { margin: 0 16px; gap: 8px; overflow-x: auto; border: 0; padding-bottom: 4px; }
+  .web-redesign #trip-bottom-nav button { min-height: 44px; padding: 0 14px; border-radius: 999px; border: 0; }
+  .web-redesign #trip-bottom-nav button.active { background: var(--accent-bg); }
+  .web-redesign #app-bottom-nav {
+    position: fixed;
+    inset: auto 0 0;
+    transform: none;
+    width: 100%;
+    max-width: none;
+    min-height: calc(64px + env(safe-area-inset-bottom));
+    margin: 0;
+    padding: 0 8px env(safe-area-inset-bottom);
+    border: 0;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    background: var(--bg-card);
+    box-shadow: none;
+  }
+  .web-redesign #app-bottom-nav button { min-height: 64px; border-radius: 0; position: relative; color: var(--text-2); }
+  .web-redesign #app-bottom-nav button.active { color: var(--accent-text); background: transparent; }
+  .web-redesign #app-bottom-nav button.active::before { content: ''; position: absolute; top: 6px; width: 36px; height: 4px; border-radius: 2px; background: var(--accent); }
+  .web-redesign #app-bottom-nav .nav-icon { background: transparent; }
+  .web-avatar { width: 40px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .web-redesign *, .web-redesign *::before, .web-redesign *::after { transition: none !important; }
+}
+
+/* Stage 2: dashboard. All selectors remain web-only. */
+.web-redesign #screen-trips :is(#trips-greeting, .stats-row, .trips-content > .section-hdr) { display: none; }
+.web-redesign .web-dashboard-heading { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 28px; }
+.web-redesign .web-dashboard-heading p { margin: 0 0 6px; color: var(--text-2); font-size: 13px; font-weight: 500; }
+.web-redesign .web-dashboard-heading h1 { margin: 0; font: 700 30px/1.25 var(--heading); letter-spacing: -.02em; overflow-wrap: anywhere; }
+.web-redesign .web-dashboard-heading .btn { width: auto; flex-shrink: 0; }
+.web-redesign .web-dashboard-section { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.web-redesign .web-trip-tabs { display: inline-grid; grid-template-columns: repeat(3, minmax(0, auto)); align-self: start; gap: 4px; max-width: 100%; margin-bottom: 18px; padding: 4px; border: 1px solid var(--border); border-radius: 14px; background: var(--track); }
+.web-redesign .web-trip-tab { min-height: 40px; padding: 8px 14px; border: 0; border-radius: 10px; background: transparent; color: var(--text-2); font: 600 13px var(--font); cursor: pointer; }
+.web-redesign .web-trip-tab span { margin-left: 4px; font-size: 11px; opacity: .75; }
+.web-redesign .web-trip-tab[aria-selected="true"] { background: var(--bg-card); color: var(--text); box-shadow: 0 1px 4px rgb(0 0 0 / .08); }
+.web-redesign .web-trip-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.web-redesign .web-section-title { display: flex; align-items: baseline; gap: 10px; margin: 0; font: 700 18px var(--heading); }
+.web-redesign .web-section-title span { color: var(--text-2); font: 500 13px var(--font); }
+.web-redesign .web-trips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px; }
+.web-redesign .web-trip-card { display: flex; flex-direction: column; align-items: stretch; gap: 18px; padding: 20px 22px; border-radius: 16px; width: 100%; min-width: 0; background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.web-redesign .web-trip-card:hover { transform: none; border-color: var(--border-strong); background: color-mix(in srgb, var(--bg-card) 96%, var(--accent) 4%); }
+.web-redesign .web-trip-heading { display: flex; gap: 12px; align-items: start; }
+.web-redesign :is(.native-trip-emoji, .native-closed-stamp) { display: none; }
+.web-redesign .web-trip-heading > div { min-width: 0; flex: 1; }
+.web-redesign :is(.web-trip-card, .web-ended-row) h3 { margin: 0; font: 700 18px/1.35 var(--heading); letter-spacing: -.01em; overflow-wrap: anywhere; }
+.web-redesign :is(.web-trip-card, .web-ended-row) p { margin: 6px 0 0; font-size: 13px; line-height: 1.5; color: var(--text-2); }
+.web-redesign .web-trip-tag { flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 24px; padding: 3px 10px; border-radius: 999px; background: var(--accent-bg); color: var(--accent-text); font-size: 12px; font-weight: 600; }
+.web-redesign .web-trip-tag.is-neutral { color: var(--text-2); background: var(--track); }
+.web-redesign .web-trip-metrics { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border: 1px solid var(--border); border-radius: 12px; }
+.web-redesign .web-trip-metrics > div { min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; }
+.web-redesign .web-trip-metrics > div + div { border-left: 1px solid var(--border); }
+.web-redesign .web-metric-label { font-size: 12px; font-weight: 500; color: var(--text-2); }
+.web-redesign .web-trip-metrics strong { min-height: 30px; font: 700 22px/1.35 var(--heading); font-variant-numeric: tabular-nums; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.web-redesign .is-positive { color: var(--accent-text); }
+.web-redesign .is-negative { color: var(--amber-text); }
+.web-redesign .web-metric-note { min-height: 36px; font-size: 12px; line-height: 1.5; color: var(--text-2); }
+.web-redesign .web-value-placeholder { color: var(--text-2); font-size: 15px; }
+.web-redesign .web-currency-label { font-size: 12px; font-weight: 600; }
+.web-redesign .web-budget-track { display: block; width: 100%; height: 5px; border: 0; border-radius: 3px; overflow: hidden; appearance: none; background: var(--track); }
+.web-redesign .web-budget-track::-webkit-progress-bar { background: var(--track); }
+.web-redesign .web-budget-track::-webkit-progress-value { border-radius: 3px; background: var(--accent); }
+.web-redesign .web-budget-track::-moz-progress-bar { border-radius: 3px; background: var(--accent); }
+.web-redesign .web-budget-spacer { height: 5px; }
+.web-redesign .web-trip-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; color: var(--text-2); font-size: 12.5px; min-height: 24px; }
+.web-redesign .web-avatar-stack { display: flex; padding-left: 6px; }
+.web-redesign .web-member-avatar { flex: 0 0 28px; display: inline-grid; place-items: center; width: 28px; height: 28px; border: 2px solid var(--bg-card); border-radius: 50%; background: var(--primary); color: #fff; font: 700 9px var(--heading); }
+.web-redesign .web-avatar-stack .web-member-avatar { margin-left: -6px; }
+.web-redesign .web-avatar-stack .web-member-avatar:nth-child(2n) { background: #A8540A; }
+.web-redesign .web-avatar-stack .web-member-avatar:nth-child(3n) { background: #4967A2; }
+.web-redesign .web-last-expense { flex: 1 1 140px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.web-redesign .web-pending-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 24px; padding: 3px 8px; border-radius: 999px; background: var(--amber-bg); color: var(--amber-text); font-size: 11.5px; font-weight: 600; }
+.web-redesign .web-pending-pill > span { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
+.web-redesign .web-dashboard-lower { display: flex; flex-wrap: wrap; align-items: start; gap: 24px; margin-top: 28px; }
+.web-redesign .web-ended { flex: 1 1 280px; }
+.web-redesign .web-ended-list { display: flex; flex-direction: column; gap: 10px; }
+.web-redesign .web-ended-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 14px; }
+.web-redesign .web-ended-row > div { flex: 1 1 180px; min-width: 0; }
+.web-redesign .web-ended-row h3 { font-size: 15px; }
+.web-redesign .web-ended-row p { margin-top: 3px; font-size: 12.5px; }
+.web-redesign .web-dashboard-banner { display: flex; align-items: center; gap: 12px; padding: 12px 16px; margin-bottom: 24px; border-radius: 12px; background: var(--amber-bg); color: var(--amber-text); font-size: 14px; line-height: 1.5; }
+.web-redesign .web-dashboard-banner[hidden] { display: none; }
+.web-redesign .web-dashboard-banner > span { flex: 1; min-width: 0; }
+.web-redesign .web-dashboard-banner .btn { flex: 0 0 auto; width: auto; min-height: 44px; background: transparent; color: inherit; border: 0; padding: 0 8px; }
+.web-redesign .web-empty-state { display: flex; align-items: center; flex-direction: column; gap: 14px; text-align: center; padding: 56px 24px; border: 1px dashed var(--border-strong); border-radius: 18px; background: var(--bg-card); }
+.web-redesign .web-empty-mark { width: 64px; height: 64px; margin-bottom: 6px; }
+.web-redesign .web-empty-mark::before, .web-redesign .web-empty-mark::after { width: 42px; height: 42px; }
+.web-redesign .web-empty-state h2 { margin: 0; font: 700 22px var(--heading); }
+.web-redesign .web-empty-state p { margin: 0; max-width: 420px; color: var(--text-2); font-size: 15px; line-height: 1.55; }
+.web-redesign .web-empty-state > div { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.web-redesign .web-empty-state .btn { width: auto; min-height: 44px; }
+.web-redesign .web-loading p, .web-redesign .web-no-active { color: var(--text-2); font-size: 13px; }
+.web-redesign .web-skeleton-card { display: flex; flex-direction: column; gap: 14px; min-height: 245px; padding: 22px; border: 1px solid var(--border); background: var(--bg-card); border-radius: 16px; }
+.web-redesign .web-skeleton-card span { height: 18px; width: 55%; background: var(--track); border-radius: 6px; }
+.web-redesign .web-skeleton-card span + span { height: 12px; width: 35%; }
+.web-redesign .web-skeleton-card > div { height: 100px; margin-top: auto; border-radius: 12px; background: var(--track); }
+.web-redesign #guest-banner { margin: 0; border: 0; border-radius: 0; background: var(--accent-bg); color: var(--text); }
+.web-redesign .web-invite-error { color: var(--danger); font-size: 13px; min-height: 40px; line-height: 1.5; margin: 8px 0; }
+.web-redesign #web-join-title { font: 700 20px var(--heading); }
+.web-redesign #modal-web-join .modal-close { width: 44px; height: 44px; }
+@media (max-width: 760px) {
+  .web-redesign .web-dashboard-heading { margin-bottom: 28px; }
+  .web-redesign .web-dashboard-heading h1 { font-size: 24px; }
+  .web-redesign .web-dashboard-heading > button { display: none; }
+  .web-redesign .web-trip-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+  .web-redesign .web-trip-tab { padding-inline: 8px; }
+  .web-redesign .web-trips-grid { grid-template-columns: minmax(0, 1fr); }
+  .web-redesign .web-trip-card { padding: 20px; }
+  .web-redesign .web-trip-metrics > div { padding: 12px; }
+  .web-redesign .web-trip-metrics strong { font-size: 21px; }
+  .web-redesign .web-dashboard-banner { flex-wrap: wrap; }
+  .web-redesign .web-dashboard-banner > span { flex-basis: 230px; }
+  .web-redesign .web-empty-state { padding: 36px 20px; }
+  body.web-redesign[data-screen="trips"] .web-new-trip { display: inline-flex !important; align-items: center; min-height: 44px; }
+  body.web-redesign[data-screen="trips"] .web-topbar { flex-wrap: wrap; }
+  body.web-redesign[data-screen="trips"] #web-account-menu { display: none; }
+  body.web-redesign[data-screen="trips"] .web-sync { order: 4; flex-basis: 100%; }
+  body.web-redesign[data-screen="trips"] .web-sync[data-state="synced"] { display: none; }
+}
+
+/* Stage 3: trip workspace. Native builds exclude this stylesheet. */
+.web-redesign .web-trip-header { display: flex; flex: 1 1 auto; flex-direction: column; width: 100%; gap: 16px; min-width: 0; }
+.web-redesign .web-trip-breadcrumb button { width: auto; min-height: 40px; }
+.web-redesign .web-trip-header-row { display: flex; justify-content: space-between; align-items: start; gap: 20px; }
+.web-redesign .web-trip-heading-group { flex: 1 1 420px; min-width: 0; }
+.web-redesign .web-trip-title-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.web-redesign .web-trip-title-row h1 { margin: 0; min-width: 0; font: 700 clamp(24px, 2.4vw, 34px)/1.2 var(--heading); overflow-wrap: anywhere; }
+.web-redesign .web-trip-title-row #dash-trip-name { font: inherit; }
+.web-redesign .web-trip-title-row #dash-day-badge { position: static; flex: 0 0 auto; }
+.web-redesign .web-trip-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-top: 10px; color: var(--text-2); font-size: 13px; }
+.web-redesign #web-trip-members { display: inline-flex; align-items: center; gap: 7px; min-width: 0; max-width: 340px; }
+.web-redesign #web-trip-members > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.web-redesign #web-trip-members .web-member-avatar { width: 25px; height: 25px; flex-basis: 25px; font-size: 9px; }
+.web-redesign #web-trip-currency .currency-control { display: flex; align-items: center; gap: 8px; margin: 0; }
+.web-redesign #web-trip-currency .currency-control label { white-space: nowrap; }
+.web-redesign #web-trip-currency select { width: auto; min-width: 90px; }
+.web-redesign .web-workspace-header-actions { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.web-redesign .web-workspace-header-actions > button { width: auto; }
+.web-redesign .web-workspace-header-actions .web-disclosure > summary { min-height: 40px; padding: 0 14px; border: 1px solid var(--border-strong); border-radius: 9px; background: var(--bg-card); font-size: 13px; font-weight: 600; }
+.web-redesign .web-workspace-header-actions .web-disclosure[open] > summary { border-color: var(--accent); }
+.web-redesign .web-workspace-header-actions .web-dropdown { z-index: 12; }
+.web-redesign .web-invite-panel { position: absolute; z-index: 12; top: calc(100% + 8px); right: 0; width: min(340px, calc(100vw - 32px)); padding: 16px; border: 1px solid var(--border-strong); border-radius: 14px; background: var(--bg-card); box-shadow: var(--shadow-lg); }
+.web-redesign .web-invite-panel .card { margin: 0; padding: 0; border: 0; box-shadow: none; }
+.web-redesign .web-invite-panel .share-input { overflow-wrap: anywhere; }
+.web-redesign #trip-bottom-nav button[hidden] { display: none !important; }
+@media (min-width: 761px) { .web-redesign #tab-overview { display: none !important; } }
+.web-redesign #web-workspace-summary { display: flex; flex-direction: column; gap: 18px; margin-bottom: 22px; }
+.web-redesign .web-workspace-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.web-redesign .web-workspace-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; padding: 22px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-card); }
+.web-redesign .web-workspace-card-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; width: 100%; color: var(--text-2); font-size: 12px; }
+.web-redesign .web-workspace-card strong { font: 700 clamp(27px, 2.6vw, 36px)/1.2 var(--heading); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.web-redesign .web-workspace-card p { margin: 0; color: var(--text-2); font-size: 13px; line-height: 1.5; }
+.web-redesign .web-workspace-card .web-budget-track { width: 100%; margin-top: 5px; }
+.web-redesign .web-balance-card .btn { margin-top: auto; }
+.web-redesign .web-trip-insights { border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card); }
+.web-redesign .web-trip-insights > summary { display: flex; justify-content: space-between; gap: 12px; padding: 14px 18px; cursor: pointer; font-weight: 600; }
+.web-redesign .web-trip-insights > summary span { color: var(--text-2); font-weight: 400; }
+.web-redesign .web-trip-insights-content { padding: 0 18px 18px; }
+.web-redesign .web-trip-insights-content .overview-hero, .web-redesign .web-trip-insights-content .overview-grid { display: none; }
+.web-redesign .web-workspace-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; align-items: start; gap: 18px; }
+.web-redesign :is(.web-workspace-main, .web-workspace-rail) h2 { margin: 0 0 10px; font: 700 17px var(--heading); }
+.web-redesign .web-workspace-main { min-width: 0; }
+.web-redesign .web-day-heading { display: flex; justify-content: space-between; align-items: start; gap: 10px; margin-bottom: 15px; }
+.web-redesign .web-day-heading > div { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.web-redesign .web-day-heading h2 { margin: 0; font: 700 19px var(--heading); }
+.web-redesign .web-day-heading strong { flex: 0 0 auto; font: 700 15px var(--heading); font-variant-numeric: tabular-nums; }
+.web-redesign .web-day-locked { margin: 0 0 14px; padding: 10px 12px; border-radius: 9px; color: var(--text-2); background: var(--track); font-size: 13px; }
+.web-redesign #web-workspace-expenses-list { min-width: 0; }
+.web-redesign #web-workspace-expenses-list .trip-add-expense { width: 100%; margin-bottom: 14px; }
+.web-redesign #web-workspace-expenses-list .day-section[hidden] { display: none; }
+.web-redesign #web-workspace-expenses-list .expense-filter-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.web-redesign #web-workspace-expenses-list .exp-info { min-width: 0; }
+.web-redesign #web-workspace-expenses-list .exp-meta { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.web-redesign #web-workspace-expenses-list .exp-right { min-width: 0; }
+.web-redesign #web-workspace-expenses-list .exp-amount { font-family: var(--heading); font-variant-numeric: tabular-nums; }
+.web-redesign .web-expense-pending { background: var(--amber-bg); }
+.web-redesign .web-expense-pending .web-pending-pill { width: fit-content; margin-top: 4px; background: var(--bg-card); }
+.web-redesign .web-workspace-rail { display: flex; flex-direction: column; gap: 14px; }
+.web-redesign .web-rail-card { min-width: 0; padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-card); }
+.web-redesign .web-rail-card p { margin: 0 0 14px; color: var(--text-2); font-size: 12px; line-height: 1.5; }
+.web-redesign .web-rail-card h3 { margin: 18px 0 10px; font: 700 13px var(--heading); }
+.web-redesign .web-rail-card .btn { width: 100%; }
+.web-redesign .web-settle-card label { display: block; margin-bottom: 5px; color: var(--text-2); font-size: 12px; }
+.web-redesign .web-settle-card input { width: 100%; min-height: 44px; margin-bottom: 10px; padding: 0 12px; font-size: 16px; }
+.web-redesign .web-balance-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; padding: 9px 0; border-top: 1px solid var(--border); font-size: 12px; }
+.web-redesign .web-balance-row span { overflow-wrap: anywhere; }
+.web-redesign .web-balance-row strong { font-variant-numeric: tabular-nums; }
+.web-redesign .web-balance-row small { grid-column: 1 / -1; color: var(--text-2); }
+.web-redesign .web-suggestion { display: grid; gap: 6px; padding: 12px 0; border-top: 1px solid var(--border); font-size: 12px; }
+.web-redesign .web-suggestion > div { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.web-redesign .web-suggestion a { color: var(--accent-text); }
+@media (max-width: 1100px) {
+  .web-redesign .web-workspace-layout { grid-template-columns: minmax(0, 1fr) 240px; }
+}
+@media (min-width: 761px) and (max-width: 980px) {
+  .web-redesign .web-workspace-layout { grid-template-columns: minmax(0, 1fr); }
+  .web-redesign .web-workspace-rail { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .web-redesign .web-trip-header-row { flex-direction: column; gap: 14px; }
+  .web-redesign .web-trip-heading-group { flex: 0 1 auto; width: 100%; }
+  .web-redesign .web-trip-meta { gap: 6px 10px; }
+  .web-redesign #web-trip-members { max-width: 100%; }
+  .web-redesign .web-workspace-header-actions { justify-content: flex-start; width: 100%; }
+  .web-redesign .web-workspace-header-actions > :is(button, details) { flex: 1 1 auto; }
+  .web-redesign .web-workspace-header-actions .web-disclosure > summary { justify-content: center; }
+  .web-redesign .web-workspace-cards { grid-template-columns: minmax(0, 1fr); }
+  .web-redesign .web-workspace-layout { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .web-redesign .web-workspace-rail { display: flex; }
+  .web-redesign .web-balances-card { display: none; }
+  .web-redesign .web-settle-card input, .web-redesign .web-settle-card label { display: none; }
+  .web-redesign .web-trip-insights > summary { flex-wrap: wrap; }
+}
+
+/* Stage 4: web-only expense entry. All original form IDs and mutation handlers remain. */
+.web-redesign #web-expense-host[hidden], .web-redesign #web-expense-details[hidden], .web-redesign .web-expense-feedback[hidden], .web-redesign .web-expense-field-error[hidden] { display: none !important; }
+.web-redesign #web-expense-host { position: relative; min-width: 0; margin: 0 0 18px; }
+.web-redesign #web-expense-host .web-expense-backdrop { display: none; }
+.web-redesign #web-expense-host .expense-page { width: 100%; min-height: 0; margin: 0; padding: 20px; overflow: visible; border: 1px solid var(--border); border-radius: 20px; background: var(--bg-card); box-shadow: var(--shadow); }
+.web-redesign #web-expense-host .modal-hdr { position: static; min-height: 0; margin: 0 0 14px; padding: 0; background: transparent; }
+.web-redesign #web-expense-host .modal-title { font: 700 17px var(--heading); }
+.web-redesign #web-expense-host .modal-close { display: none; }
+.web-redesign #web-expense-host #form-add-expense { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'title' 'amount' 'category' 'payer' 'day' 'split' 'more' 'details' 'save'; align-items: start; gap: 16px; }
+.web-redesign #web-expense-host .expense-title-group { grid-area: title; }
+.web-redesign #web-expense-host .expense-amount-card { grid-area: amount; }
+.web-redesign #web-expense-host .expense-category-group { grid-area: category; }
+.web-redesign #web-expense-host .expense-detail-rows { display: contents; }
+.web-redesign #web-expense-host .expense-detail-rows .form-group:first-child { grid-area: day; }
+.web-redesign #web-expense-host .expense-detail-rows .form-group:last-child { grid-area: payer; }
+.web-redesign #web-expense-host .web-expense-split-choice { grid-area: split; }
+.web-redesign #web-expense-host .web-expense-more { grid-area: more; }
+.web-redesign #web-expense-host #web-expense-details { grid-area: details; }
+.web-redesign #web-expense-host #btn-add-expense { grid-area: save; width: 100%; min-height: 44px; margin: 0; }
+.web-redesign #web-expense-host :is(.form-group, .expense-amount-card) { min-width: 0; margin: 0; }
+.web-redesign #web-expense-host .form-group > label, .web-redesign #web-expense-host .expense-amount-card > label { display: block; margin: 0 0 6px; color: var(--text-2); font-size: 16px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.web-redesign #web-expense-host :is(input, select) { width: 100%; min-width: 0; min-height: 44px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg-input); color: var(--text); font-size: 16px; }
+.web-redesign #web-expense-host .expense-amount-card { padding: 0; border: 0; border-radius: 0; background: transparent; }
+.web-redesign #web-expense-host .expense-amount-card .amount-currency-row { display: flex; min-width: 0; gap: 0; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg-input); }
+.web-redesign #web-expense-host .expense-amount-card .amount-currency-row:focus-within {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.web-redesign #web-expense-host :is(input, select):focus-visible {
+  outline: 0;
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.web-redesign #web-expense-host .expense-amount-card .amount-currency-row > span { display: flex; align-items: center; padding-left: 12px; font: 700 18px var(--heading); }
+.web-redesign #web-expense-host #exp-amount { flex: 1 1 0; width: 0; height: 48px; min-height: 48px; padding: 0 8px; border: 0; background: transparent; font: 700 18px var(--heading) !important; }
+.web-redesign #web-expense-host #exp-amount:focus,
+.web-redesign #web-expense-host #exp-amount:focus-visible,
+.web-redesign #web-expense-host #exp-currency:focus,
+.web-redesign #web-expense-host #exp-currency:focus-visible { outline: 0; box-shadow: none; }
+.web-redesign #web-expense-host #exp-currency { flex: 0 0 80px; width: 80px; height: 48px; min-height: 48px; padding: 0 8px; border: 0; border-left: 1px solid var(--border-strong); border-radius: 0 11px 11px 0; background: transparent; font-size: 16px; }
+.web-redesign #web-expense-host :is(#expense-category-grid, #expense-payer-chips) { display: none; }
+.web-redesign #web-expense-host .expense-detail-rows .form-group { display: block; min-height: 0; border: 0; }
+.web-redesign #web-expense-host .expense-detail-rows label { flex: none; }
+.web-redesign #web-expense-host .web-expense-more { width: fit-content; min-height: 44px; padding: 0 8px; border: 0; background: transparent; color: var(--accent-text); font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; }
+.web-redesign #web-expense-host #web-expense-details { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding-top: 4px; }
+.web-redesign #web-expense-host .expense-split-group, .web-redesign #web-expense-host .expense-note-group { align-self: start; }
+.web-redesign #web-expense-host .expense-note-group > label { display: block; }
+.web-redesign #web-expense-host .split-type-row { max-width: 250px; }
+.web-redesign #web-expense-host .split-type-btn { min-height: 44px; }
+.web-redesign #web-expense-host .split-person-input { width: 80px !important; }
+.web-redesign #web-expense-host .web-expense-field-error { margin: 6px 0 0; color: var(--danger); font-size: 16px; line-height: 1.4; }
+.web-redesign #web-expense-host .has-error :is(input, select, .amount-currency-row) { border-color: var(--danger); }
+.web-redesign #web-expense-host .web-expense-feedback { margin: 0 0 15px; padding: 10px 12px; border-radius: 12px; color: var(--accent-text); background: var(--accent-bg); font-size: 16px; }
+.web-redesign #web-expense-host .web-expense-feedback[data-tone="pending"] { color: var(--amber-text); background: var(--amber-bg); }
+.web-redesign #web-expense-host .web-expense-feedback[data-tone="error"] { color: var(--danger); background: var(--danger-bg); }
+.web-redesign #web-workspace-expenses-list .trip-add-expense { display: none; }
+.web-redesign .web-overview-suggestion { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 10px; width: 100%; margin-top: 2px; padding-top: 9px; border-top: 1px solid var(--border); }
+.web-redesign .web-overview-suggestion > span { min-width: 0; color: var(--text-2); font-size: 12px; overflow-wrap: anywhere; }
+.web-redesign .web-overview-suggestion > b { font-size: 12px; font-weight: 700; white-space: nowrap; }
+.web-redesign .web-overview-suggestion > .btn { grid-column: 1 / -1; justify-self: start; min-height: 36px; margin-top: 3px; padding-inline: 10px; font-size: 12px; }
+
+/* Supporting figures stay readable while the large totals remain the visual focus. */
+.web-redesign :is(.web-trip-card, .web-ended-row) p,
+.web-redesign :is(.web-workspace-card p, .web-rail-card p) { font-size:16px; }
+.web-redesign :is(.web-metric-label, .web-metric-note, .web-trip-footer,
+  .web-trip-meta, .web-workspace-card-head,
+  .web-balance-row) { font-size:14px; }
+.web-redesign :is(.web-metric-note, .web-workspace-card-head) {
+  color:var(--text-2);
+}
+.web-redesign :is(.web-trip-metrics strong, .web-workspace-card strong,
+  .web-balance-row strong) { font-variant-numeric:tabular-nums; }
+.web-redesign .web-workspace-header-actions .web-disclosure > summary { min-height:44px; }
+.web-redesign .web-trip-insights > summary { min-height:44px; align-items:center; }
+@media (max-width: 760px) {
+  .web-redesign.modal-open :is(#app-bottom-nav, #trip-bottom-nav) { display: none !important; }
+  .web-redesign #web-workspace-expenses-list .trip-add-expense { display: grid; }
+  .web-redesign #web-expense-host { display: none; position: fixed; z-index: 110; inset: 0; margin: 0; }
+  .web-redesign.web-expense-open { overflow: hidden; }
+  .web-redesign.web-expense-open #web-expense-host:not([hidden]) { display: flex; align-items: flex-end; justify-content: center; }
+  .web-redesign.web-expense-open #web-expense-host .web-expense-backdrop { display: block; position: absolute; inset: 0; background: rgba(0, 0, 0, .58); }
+  .web-redesign #web-expense-host .expense-page { position: relative; width: 100%; height: auto; max-height: min(92dvh, 900px); min-height: 0; padding: 18px 18px max(18px, env(safe-area-inset-bottom)); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; border-radius: 20px 20px 0 0; }
+  .web-redesign #web-expense-host .modal-hdr { position: sticky; top: -18px; z-index: 2; min-height: 36px; padding: 7px 0; background: var(--bg-card); }
+  .web-redesign #web-expense-host .modal-close { display: grid; place-items: center; }
+  .web-redesign #web-expense-host #form-add-expense { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'title' 'amount' 'category' 'payer' 'day' 'split' 'more' 'details' 'save'; gap: 16px; }
+  .web-redesign #web-expense-host .web-expense-more { min-height: 44px; }
+  .web-redesign #web-expense-host #btn-add-expense { position: sticky; bottom: 0; min-height: 48px; }
+  .web-redesign #web-expense-host #web-expense-details { grid-template-columns: minmax(0, 1fr); }
+  .web-redesign .web-overview-suggestion { grid-template-columns: minmax(0, 1fr) auto auto; gap: 6px; padding-top: 7px; }
+  .web-redesign .web-overview-suggestion > :is(span, b) { font-size: 10.5px; }
+  .web-redesign .web-overview-suggestion > .btn { grid-column: auto; min-height: 32px; margin: 0; padding-inline: 7px; font-size: 10px; }
+}
+@media (max-width: 390px) {
+  .web-redesign #web-expense-host .expense-page { padding-inline: 14px; }
+  .web-redesign #web-expense-host #form-add-expense { grid-template-areas: 'title' 'amount' 'category' 'payer' 'day' 'split' 'more' 'details' 'save'; }
+}
+
+/* Phone Trips use the same compact reading scale as Analytics, without cards. */
+.web-redesign .mobile-trip-row { display: none; }
+@media (max-width: 760px) {
+  .web-redesign .web-dashboard-heading { margin-bottom: 18px; }
+  .web-redesign .web-dashboard-lower { margin-top: 20px; }
+  .web-redesign :is(.web-trips-grid, .web-ended-list) { display: block; overflow: hidden; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-card); }
+  .web-redesign :is(.web-trip-card, .web-ended-row) { display: block; min-height: 72px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  .web-redesign :is(.web-trip-card, .web-ended-row):hover { background: var(--bg-hover); border-color: transparent; }
+  .web-redesign :is(.web-trip-card, .web-ended-row) + :is(.web-trip-card, .web-ended-row) { border-top: 1px solid var(--border); }
+  .web-redesign .web-trip-card > :not(.mobile-trip-row),
+  .web-redesign .web-ended-row > :not(.mobile-trip-row) { display: none; }
+  .web-redesign :is(.web-trip-card, .web-ended-row) > .mobile-trip-row { display: grid; grid-template-columns: 40px minmax(0, 1fr) minmax(76px, auto) 8px; align-items: center; gap: 10px; min-width: 0; min-height: 72px; padding: 11px 12px; }
+  .web-redesign .mobile-trip-emoji { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--accent-bg); font-size: 21px; }
+  .web-redesign .web-ended-row .mobile-trip-emoji { background: var(--track); }
+  .web-redesign .mobile-trip-copy, .web-redesign .mobile-trip-amount { display: flex; flex-direction: column; min-width: 0; gap: 3px; }
+  .web-redesign .mobile-trip-copy > strong { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; white-space: normal; font: 700 15px/1.25 var(--heading); }
+  .web-redesign .mobile-trip-copy > span:not(.mobile-trip-status) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); font-size: 12px; }
+  .web-redesign .mobile-trip-status { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+  .web-redesign .mobile-trip-status .web-trip-tag { min-height: 0; padding: 0; border-radius: 0; background: transparent; color: var(--accent-text); font-size: 11px; }
+  .web-redesign .mobile-trip-status .native-closed-stamp { display: inline; min-height: 0; padding: 0; border: 0; border-radius: 0; color: var(--text-2); font-size: 11px; font-weight: 600; }
+  .web-redesign .mobile-trip-status .web-pending-pill { min-height: 0; padding: 0; background: transparent; font-size: 10px; }
+  .web-redesign .mobile-trip-amount { align-items: end; text-align: right; }
+  .web-redesign .mobile-trip-amount > strong { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 14px/1.3 var(--heading); font-variant-numeric: tabular-nums; }
+  .web-redesign .mobile-trip-amount .web-currency-label { font-size: 10px; }
+  .web-redesign .mobile-trip-amount > span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); font-size: 11px; }
+  .web-redesign .mobile-trip-chevron { color: var(--text-2); font-size: 19px; }
+
+  /* Keep the New trip form short and its emoji choices in one swipeable row. */
+  .web-redesign #modal-new-trip .modal-sheet { max-height: calc(100dvh - env(safe-area-inset-top) - 8px); padding: 18px 16px max(18px, env(safe-area-inset-bottom)); overscroll-behavior: contain; }
+  .web-redesign #modal-new-trip .modal-hdr { margin-bottom: 12px; }
+  .web-redesign #form-new-trip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 12px; }
+  .web-redesign #form-new-trip > :is(.trip-emoji-field, .form-group:nth-child(2), .trip-date-fields, #btn-create-trip) { grid-column: 1 / -1; }
+  .web-redesign #form-new-trip .form-group { min-width: 0; margin: 0; }
+  .web-redesign #form-new-trip :is(.trip-emoji-field legend, .form-group label) { margin-bottom: 4px; font-size: 13px; }
+  .web-redesign #form-new-trip .emoji-picker { flex-wrap: nowrap; gap: 8px; width: 100%; margin-top: 2px; padding: 3px 14px 8px 2px; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  .web-redesign #form-new-trip .emoji-btn { flex: 0 0 48px; width: 48px; height: 48px; font-size: 22px; box-shadow: inset 0 0 0 1px var(--border); }
+  .web-redesign #form-new-trip :is(input, select) { width: 100%; min-height: 44px; font-size: 16px; }
+  .web-redesign #form-new-trip .trip-date-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .web-redesign #form-new-trip #btn-create-trip { position: sticky; bottom: -18px; z-index: 1; width: 100%; min-height: 48px; margin: 2px 0 0; }
+
+  /* The dialog owns scrolling; its submit action stays above the home indicator. */
+  html.web-expense-open, body.web-redesign.web-expense-open { overflow: hidden; }
+  body.web-redesign.web-expense-open :is(#app-bottom-nav, #trip-bottom-nav) { display: none !important; }
+  .web-redesign #web-expense-host .expense-page { display: flex; flex-direction: column; overflow: hidden; }
+  .web-redesign #web-expense-host .modal-hdr { position: relative; top: auto; flex: 0 0 auto; }
+  .web-redesign #web-expense-host #form-add-expense { flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-bottom: 10px; grid-template-areas: 'title' 'amount' 'category' 'payer' 'day' 'split' 'more' 'details'; grid-auto-rows: max-content; align-content: start; }
+  .web-redesign #web-expense-host .web-expense-footer { flex: 0 0 auto; padding-top: 10px; border-top: 1px solid var(--border); background: var(--bg-card); }
+  .web-redesign #web-expense-host .web-expense-footer:empty { display: none; }
+  .web-redesign #web-expense-host .web-expense-footer #btn-add-expense { position: static; width: 100%; min-height: 48px; }
+}
+
+/* A phone switches from global navigation to trip navigation when a trip opens. */
+@media (max-width: 760px) {
+  body.web-redesign #app-bottom-nav[hidden], body.web-redesign #trip-bottom-nav[hidden] { display: none !important; }
+  body.web-redesign .modal.open { z-index: 120; }
+  body.web-redesign #trip-bottom-nav,
+  body.web-redesign #trip-bottom-nav.visible {
+    position: fixed; z-index: 100; inset: auto 0 0; display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0;
+    width: 100%; max-width: none; min-height: calc(64px + env(safe-area-inset-bottom));
+    margin: 0; padding: 0 4px env(safe-area-inset-bottom);
+    overflow: visible; border: 0; border-top: 1px solid var(--border);
+    border-radius: 0; background: var(--bg-card); box-shadow: none; transform: none;
+  }
+  body.web-redesign #trip-bottom-nav button { position: relative; flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 0; min-height: 64px; padding: 0 2px; border: 0; border-radius: 0; color: var(--text-2); }
+  body.web-redesign #trip-bottom-nav button.active { color: var(--accent-text); background: transparent; }
+  body.web-redesign #trip-bottom-nav button.active::before { content: ''; position: absolute; top: 5px; width: 28px; height: 4px; border-radius: 2px; background: var(--accent); }
+  body.web-redesign #trip-bottom-nav .nav-icon { display: grid; place-items: center; width: 36px; height: 25px; background: transparent; }
+  body.web-redesign #trip-bottom-nav button b { font-size: 10px; line-height: 1.1; }
+
+  /* Remove the nested page gutters and oversized summary typography. */
+  body.web-redesign #screen-dashboard .dash-top { padding: 10px 16px 6px; }
+  body.web-redesign #screen-dashboard .dash-content { padding: 10px 16px calc(82px + env(safe-area-inset-bottom)); }
+  body.web-redesign #screen-dashboard .tab-panel { padding: 0; }
+  body.web-redesign #screen-dashboard .web-trip-header { gap: 7px; }
+  body.web-redesign #screen-dashboard .web-trip-header-row { gap: 8px; }
+  body.web-redesign #screen-dashboard .web-trip-breadcrumb button { min-height: 36px; padding: 0; font-size: 12px; }
+  body.web-redesign #screen-dashboard .web-trip-title-row { gap: 8px; }
+  body.web-redesign #screen-dashboard .web-trip-title-row h1 { font-size: 20px; }
+  body.web-redesign #screen-dashboard .web-trip-meta { gap: 4px 8px; margin-top: 5px; font-size: 12px; }
+  body.web-redesign #screen-dashboard #web-trip-members .web-member-avatar { width: 21px; height: 21px; flex-basis: 21px; }
+  body.web-redesign #screen-dashboard #web-trip-currency .currency-control { gap: 6px; font-size: 12px; }
+  body.web-redesign #screen-dashboard #web-trip-currency select { min-height: 40px; font-size: 16px; }
+  body.web-redesign #screen-dashboard .web-workspace-header-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  body.web-redesign #screen-dashboard .web-workspace-header-actions > :is(button, details) { min-width: 0; width: 100%; }
+  body.web-redesign #screen-dashboard .web-workspace-header-actions > button,
+  body.web-redesign #screen-dashboard .web-workspace-header-actions .web-disclosure > summary { width: 100%; min-height: 40px; padding: 0 5px; font-size: 11px; }
+  body.web-redesign #screen-dashboard #web-workspace-summary { gap: 10px; margin-bottom: 0; }
+  body.web-redesign #screen-dashboard .web-workspace-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  body.web-redesign #screen-dashboard .web-workspace-card { gap: 6px; padding: 12px; border-radius: 12px; }
+  body.web-redesign #screen-dashboard .web-workspace-card-head { font-size: 11px; }
+  body.web-redesign #screen-dashboard .web-workspace-card strong { font-size: clamp(15px, 4.2vw, 21px); line-height: 1.3; }
+  body.web-redesign #screen-dashboard .web-workspace-card p { font-size: 11px; line-height: 1.35; }
+  body.web-redesign #screen-dashboard .web-workspace-card .btn { width: 100%; min-height: 40px; margin-top: auto; padding-inline: 5px; font-size: 11px; }
+  body.web-redesign #screen-dashboard .web-trip-insights > summary { padding: 10px 12px; font-size: 12px; }
+  body.web-redesign #screen-dashboard .web-trip-insights > summary span { font-size: 11px; }
+  body.web-redesign #screen-dashboard .web-overview-add { width: 100%; min-height: 44px; margin: 0; }
+  body.web-redesign #screen-dashboard .web-workspace-layout { gap: 10px; }
+  body.web-redesign #screen-dashboard .web-day-heading { margin-bottom: 10px; }
+  body.web-redesign #screen-dashboard .web-day-heading h2 { font-size: 16px; }
+  body.web-redesign #screen-dashboard .web-day-heading strong { font-size: 13px; }
+  body.web-redesign #screen-dashboard .trip-add-expense { min-height: 50px; margin-bottom: 10px; padding: 8px 12px; border-radius: 12px; }
+  body.web-redesign #screen-dashboard .day-hdr { padding: 10px 12px; }
+  body.web-redesign #screen-dashboard .day-body { padding: 0 12px; }
+  body.web-redesign #screen-dashboard .expense-card { gap: 8px; padding: 10px 0; }
+  body.web-redesign #screen-dashboard .exp-title { font-size: 13px; }
+  body.web-redesign #screen-dashboard .exp-meta { font-size: 11px; }
+}
+
+/* Keep the web sign-in screen in step with the calmer public welcome page. */
+body:not(.native-shell) #screen-auth {
+  max-width: 1180px;
+  grid-template-columns: minmax(300px, 1fr) minmax(330px, 400px);
+  gap: clamp(28px, 4.5vw, 64px);
+}
+body:not(.native-shell) #screen-auth .auth-intro h1 { font-size: clamp(2.4rem, 4.3vw, 4.2rem); }
+body:not(.native-shell) #screen-auth .auth-intro p { font-size: clamp(1rem, 1.45vw, 1.1rem); }
+body:not(.native-shell) #screen-auth .auth-intro img { max-height: 360px; }
+body:not(.native-shell) #screen-auth .auth-card { padding: clamp(24px, 3vw, 34px); }
+body:not(.native-shell) #screen-auth .auth-logo-text { font-size: 1.5rem; }
+body:not(.native-shell) #screen-auth .auth-logo-text::before { width: 38px; height: 38px; flex-basis: 38px; }
+body:not(.native-shell) #screen-auth .auth-tagline { margin-bottom: 1.5rem; font-size: 13px; }
+body:not(.native-shell) #screen-auth .auth-mode-title { font-size: 24px; }
+body:not(.native-shell) #screen-auth .auth-mode-subtitle { margin-bottom: 16px; font-size: 15px; }
+body:not(.native-shell) #screen-auth .form-group { margin-bottom: 13px; }
+body:not(.native-shell) #screen-auth .form-group label { margin-bottom: 5px; font-size: 14px; }
+body:not(.native-shell) #screen-auth .auth-forgot { margin-bottom: 8px; }
+body:not(.native-shell) #screen-auth .auth-divider { margin: 16px 0 12px; }
+body:not(.native-shell) #screen-auth .auth-switch { margin-top: 14px; }
+@media (min-width: 761px) {
+  /* Persistent web navigation makes the secondary mobile page headers redundant. */
+  body.web-redesign #screen-profile > .profile-header { display: none; }
+  body.web-redesign #screen-global-analytics > .global-analytics-header { display: none; }
+
+  body.web-redesign #screen-profile .profile-content { max-width: 760px; }
+  body.web-redesign #screen-profile .profile-title {
+    margin: 0 0 20px;
+    font-size: 30px;
+    letter-spacing: -.025em;
+  }
+  body.web-redesign #screen-profile .profile-identity {
+    gap: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    background: var(--bg-card);
+  }
+  body.web-redesign #screen-profile .profile-avatar { width: 58px; height: 58px; }
+  body.web-redesign #screen-profile .profile-identity h1 { font-size: 21px; }
+  body.web-redesign #screen-profile .profile-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  body.web-redesign #screen-profile .settings-group {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  body.web-redesign #screen-profile .settings-group h2 { padding: 0 5px; }
+  body.web-redesign #screen-profile .settings-group :is(button, a, .settings-select-row, .settings-static-row) {
+    min-height: 58px;
+    padding: 13px 16px;
+  }
+  body.web-redesign #screen-profile .profile-data-group { grid-column: 1 / -1; }
+  body.web-redesign #screen-profile .profile-support { margin-top: 16px; }
+  body.web-redesign #screen-profile :is([data-section="data-delete"], [data-section="account-delete"]) { color: #F87171; }
+  body.web-redesign.light #screen-profile :is([data-section="data-delete"], [data-section="account-delete"]) { color: #DC2626; }
+
+  body.web-redesign #screen-global-analytics .global-analytics-content { max-width: 960px; }
+  body.web-redesign #screen-global-analytics .section-heading { margin-bottom: 20px; }
+  body.web-redesign #screen-global-analytics .global-analytics-hero {
+    padding: 22px 24px;
+    border-radius: 14px;
+  }
+  body.web-redesign #screen-global-analytics .global-overview-grid { gap: 12px; margin: 12px 0 20px; }
+  body.web-redesign #screen-global-analytics .global-overview-grid .ov-tile { min-height: 94px; padding: 14px 16px; }
+  body.web-redesign #screen-global-analytics .global-analytics-grid { gap: 16px; }
+  body.web-redesign #screen-global-analytics .global-trip-list { border-radius: 14px; }
+}
+@media (max-width: 900px) {
+  body:not(.native-shell) #screen-auth { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  body:not(.native-shell) #screen-auth .auth-card { padding: 56px 0 20px; }
+  body:not(.native-shell) #screen-auth .auth-mode-title { font-size: 23px; }
+}
+
+/* Trip workspace: one calm header, a two-tab mobile shell, and a readable feed. */
+.web-redesign .web-trip-header-primary { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.web-redesign .web-trip-breadcrumb { flex: 0 0 auto; }
+.web-redesign .web-trip-heading-group { flex: 1 1 auto; min-width: 0; }
+.web-redesign .web-trip-title-row { flex-wrap: nowrap; min-width: 0; }
+.web-redesign .web-trip-title-row h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.web-redesign .web-trip-meta { display: flex; flex: 0 0 auto; align-items: center; gap: 8px; margin: 0 0 0 auto; }
+.web-redesign .web-trip-meta #web-trip-members { display: inline-flex; align-items: center; min-width: 0; }
+.web-redesign .web-trip-meta #web-trip-members > span:last-child { display: none; }
+.web-redesign .web-trip-meta #web-trip-currency .currency-control { margin: 0; }
+.web-redesign .web-trip-overflow { margin-left: 2px; }
+.web-redesign .web-trip-overflow > summary { display: grid; place-items: center; width: 40px; min-height: 40px; padding: 0; border: 1px solid var(--border-strong); border-radius: 10px; color: var(--text); font-size: 18px; line-height: 1; letter-spacing: 1px; }
+.web-redesign .web-trip-overflow .web-dropdown { right: 0 !important; left: auto !important; width: min(260px, calc(100vw - 24px)); }
+.web-redesign .web-overflow-shortcuts { padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1px solid var(--border); }
+.web-redesign .web-trip-overflow .web-dropdown .btn-danger { color: var(--danger); background: transparent; border: 0; }
+
+.web-redesign .web-workspace-layout { display: grid; grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr); align-items: start; gap: 28px; }
+.web-redesign .web-workspace-main { min-width: 0; }
+.web-redesign .web-expense-feed-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 14px; }
+.web-redesign .web-expense-feed-heading h2 { margin: 0; font: 700 20px/1.25 var(--heading); }
+.web-redesign .web-expense-feed-heading span { color: var(--text-2); font-size: 12px; }
+.web-redesign #web-workspace-expenses-list { position: relative; padding-bottom: 112px; }
+.web-redesign :is(#tab-expenses, #tab-members) { scroll-padding-bottom: 120px; }
+.web-redesign #web-workspace-expenses-list .expense-filter-row { margin: 0 0 12px; }
+.web-redesign #web-workspace-expenses-list .day-section { margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.web-redesign #web-workspace-expenses-list .day-hdr { position: sticky; top: 0; z-index: 3; display: flex; align-items: center; gap: 8px; min-height: 42px; padding: 10px 0 7px; border-bottom: 1px solid var(--border); background: var(--bg); }
+.web-redesign #web-workspace-expenses-list .day-label { font: 700 14px var(--heading); }
+.web-redesign #web-workspace-expenses-list .day-total { margin-left: auto; font-size: 12px; }
+.web-redesign #web-workspace-expenses-list .settled-badge { min-height: 0; padding: 0; border: 0; background: transparent; color: var(--text-2); font-size: 11px; font-weight: 500; }
+.web-redesign #web-workspace-expenses-list .settled-badge::before { content: '✓ '; color: var(--accent-text); }
+.web-redesign #web-workspace-expenses-list .day-body { padding: 0; }
+.web-redesign #web-workspace-expenses-list .expense-card { min-height: 64px; margin: 0; padding: 10px 0; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; background: transparent; box-shadow: none; }
+.web-redesign #web-workspace-expenses-list .expense-card:hover { transform: none; background: transparent; }
+.web-redesign #web-workspace-expenses-list .exp-cat { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--accent-bg); font-size: 17px; }
+.web-redesign #web-workspace-expenses-list .exp-cat.cat-food { background: color-mix(in srgb, #f59e0b 18%, var(--bg-card)); }
+.web-redesign #web-workspace-expenses-list .exp-cat.cat-drinks { background: color-mix(in srgb, #f59e0b 18%, var(--bg-card)); }
+.web-redesign #web-workspace-expenses-list .exp-cat.cat-transport { background: color-mix(in srgb, #4f8ef7 20%, var(--bg-card)); }
+.web-redesign #web-workspace-expenses-list .exp-cat.cat-hotel { background: color-mix(in srgb, #22a06b 18%, var(--bg-card)); }
+.web-redesign #web-workspace-expenses-list .exp-cat.cat-activities { background: color-mix(in srgb, #8b5cf6 18%, var(--bg-card)); }
+.web-redesign #web-workspace-expenses-list .expense-status { min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--text-2); font-size: 10.5px; font-weight: 500; }
+.web-redesign #web-workspace-expenses-list .expense-status.neutral { color: var(--text-2); }
+.web-redesign #web-workspace-expenses-list .expense-status.neutral::first-letter { color: var(--accent-text); }
+.web-redesign .web-expense-fab { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(24px, env(safe-area-inset-bottom)); z-index: 9999; display: inline-flex; align-items: center; gap: 7px; min-height: 46px; padding: 0 17px; border: 0; border-radius: 999px; color: #fff; background: var(--primary); box-shadow: 0 10px 24px color-mix(in srgb, var(--primary) 38%, transparent); font-size: 13px; }
+.web-redesign #web-workspace-fab[hidden] { display: none; }
+.web-redesign #tab-members { padding-bottom: 112px; }
+.web-redesign #web-workspace-expenses-list .exp-cat { color: var(--cat, var(--accent-text)); }
+.web-redesign #web-workspace-expenses-list .expense-category-icon { width: 18px; height: 18px; }
+.web-redesign .web-expense-fab span { font-size: 19px; line-height: 1; }
+.web-redesign .web-workspace-rail { position: sticky; top: 84px; display: grid; gap: 12px; }
+.web-redesign .web-rail-summary { padding: 16px; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-card); }
+.web-redesign .web-rail-summary > h2 { margin: 0 0 12px; font: 700 16px var(--heading); }
+.web-redesign .web-rail-summary .web-workspace-cards { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.web-redesign .web-rail-summary .web-workspace-card { padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: transparent; box-shadow: none; }
+.web-redesign .web-rail-summary .web-workspace-card strong { font-size: 20px; }
+
+#expense-action-sheet[hidden] { display: none; }
+#expense-action-sheet { position: fixed; z-index: 130; inset: 0; display: flex; align-items: end; justify-content: center; }
+.expense-action-backdrop { position: absolute; inset: 0; border: 0; background: rgba(0,0,0,.58); }
+.expense-action-sheet-card { position: relative; z-index: 1; width: min(480px, 100%); padding: 16px 16px max(20px, env(safe-area-inset-bottom)); border: 1px solid var(--border); border-radius: 20px 20px 0 0; background: var(--bg-card); box-shadow: var(--shadow-lg); }
+.expense-action-sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.expense-action-sheet-head h2 { margin: 0; font: 700 18px var(--heading); }
+.expense-action-sheet-head button { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 50%; background: transparent; color: var(--text); }
+.expense-action-option { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 10px; width: 100%; min-height: 64px; padding: 10px 8px; border: 0; border-radius: 10px; background: transparent; color: var(--text); text-align: left; }
+.expense-action-option:hover { background: var(--accent-bg); }
+.expense-action-option > span:first-child { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: var(--accent-bg); font-size: 18px; }
+.expense-action-option b, .expense-action-option em { display: block; font-style: normal; }
+.expense-action-option b { font-size: 14px; }
+.expense-action-option b small { margin-left: 4px; color: var(--accent-text); font-size: 10px; text-transform: uppercase; }
+.expense-action-option em { margin-top: 3px; color: var(--text-2); font-size: 12px; }
+/* Receipt scanning is intentionally a mobile-app feature, not part of the web workspace. */
+html:not(.native-shell) body.web-redesign #expense-action-sheet [data-action="open-receipt-picker"] { display: none; }
+#receipt-review-sheet[hidden] { display: none; }
+#receipt-review-sheet { position: fixed; z-index: 131; inset: 0; display: flex; align-items: end; justify-content: center; }
+.receipt-review-backdrop { position: absolute; inset: 0; border: 0; background: rgba(0,0,0,.58); }
+.receipt-review-card { position: relative; z-index: 1; width: min(480px, 100%); padding: 16px 16px max(20px, env(safe-area-inset-bottom)); border: 1px solid var(--border); border-radius: 20px 20px 0 0; background: var(--bg-card); box-shadow: var(--shadow-lg); }
+.receipt-review-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.receipt-review-head h2 { margin: 0; font: 700 18px var(--heading); }
+.receipt-review-head button { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 50%; background: transparent; color: var(--text); }
+.receipt-preview-frame { display: grid; min-height: 176px; overflow: hidden; place-items: center; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); }
+.receipt-preview-frame img { display: block; width: 100%; max-height: 260px; object-fit: contain; }
+.receipt-preview-frame span { padding: 20px; color: var(--text-2); font-size: 13px; text-align: center; }
+.receipt-preview-frame .receipt-photo-spinner { width: 36px; height: 36px; padding: 0; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
+.receipt-preview-frame .receipt-photo-spinner[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .receipt-preview-frame .receipt-photo-spinner { animation-duration: 2.4s; } }
+.receipt-preview-name { margin: 10px 0 0; overflow: hidden; color: var(--text); font-size: 13px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.receipt-review-status { margin: 9px 0 0; color: var(--accent-dark); font:700 13px/1.35 var(--heading); }
+.receipt-review-copy { margin: 6px 0 14px; color: var(--text-2); font-size: 12px; line-height: 1.45; }
+.receipt-review-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.receipt-review-actions [data-receipt-action="scan"] { grid-column: 1 / -1; }
+.receipt-review-actions .btn { min-height: 44px; }
+.receipt-review-actions .btn:disabled { cursor:wait; opacity:.62; }
+
+/* The form is always a sheet opened from the FAB, including desktop. */
+.web-redesign #web-expense-host { display: none; position: fixed; z-index: 120; inset: 0; margin: 0; }
+.web-redesign.web-expense-open #web-expense-host:not([hidden]) { display: flex; align-items: end; justify-content: center; }
+.web-redesign.web-expense-open #web-expense-host .web-expense-backdrop { display: block; position: absolute; inset: 0; background: rgba(0,0,0,.58); }
+.web-redesign #web-expense-host .expense-page { position: relative; display: flex; flex-direction: column; width: min(560px, 100%); max-height: min(88dvh, 760px); margin: 0; padding: 18px; overflow: hidden; border-radius: 20px 20px 0 0; }
+.web-redesign #web-expense-host .modal-hdr { display: flex; flex: 0 0 auto; }
+.web-redesign #web-expense-host .modal-close { display: grid; place-items: center; }
+.web-redesign #web-expense-host #form-add-expense { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-bottom: 10px; }
+.web-redesign #web-expense-host .web-expense-footer { flex: 0 0 auto; padding-top: 10px; border-top: 1px solid var(--border); background: var(--bg-card); }
+.web-redesign #web-expense-host .web-expense-footer #btn-add-expense { position: static; width: 100%; }
+.web-redesign .modal.open { z-index: 140; }
+
+/* Tablet widths: the redesign's two-column workspace above would otherwise
+   override the earlier tablet rule and squeeze the rail into two narrow columns. */
+@media (min-width: 761px) and (max-width: 980px) {
+  .web-redesign .web-workspace-layout { grid-template-columns: minmax(0, 1fr); }
+  .web-redesign .web-workspace-rail { position: static; }
+}
+@media (max-width: 760px) {
+  body.web-redesign #trip-bottom-nav, body.web-redesign #trip-bottom-nav.visible { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.web-redesign #screen-dashboard .dash-top { padding: 10px 16px 6px; }
+  body.web-redesign #screen-dashboard .dash-content { padding: 10px 16px calc(94px + env(safe-area-inset-bottom)); }
+  body.web-redesign .web-trip-header-primary { gap: 7px; }
+  body.web-redesign .web-trip-meta { gap: 4px; margin-left: auto; }
+  body.web-redesign .web-trip-meta #web-trip-currency { max-width: 110px; }
+  body.web-redesign .web-trip-meta #web-trip-currency .currency-control > :not(select) { display: none; }
+  body.web-redesign .web-trip-meta #web-trip-currency select { min-height: 38px; padding: 0 22px 0 8px; font-size: 16px; }
+  body.web-redesign .web-trip-overflow > summary { width: 38px; min-height: 38px; }
+  .web-redesign .web-workspace-layout { display: block; }
+  .web-redesign .web-expense-feed-heading { margin-bottom: 8px; }
+  .web-redesign .web-expense-feed-heading h2 { font-size: 16px; }
+  .web-redesign #web-workspace-expenses-list { padding-bottom: 100px; }
+  .web-redesign #web-workspace-expenses-list .expense-filter-row { overflow-x: auto; flex-wrap: nowrap; padding: 0 16px 4px 0; scroll-padding-right: 16px; -webkit-overflow-scrolling: touch; }
+  .web-redesign #web-workspace-expenses-list .day-hdr { top: 0; min-height: 38px; padding: 8px 0 6px; }
+  .web-redesign .web-phone-day { border: 0; }
+  .web-redesign .web-phone-day-toggle { position: sticky; top: 0; z-index: 3; min-height: 38px; padding: 8px 0 6px; border-bottom: 1px solid var(--border); background: var(--bg); }
+  .web-redesign .web-phone-day-body .expense-card { min-height: 58px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+  .web-redesign .web-phone-day-body .exp-cat { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: var(--accent-bg); font-size: 15px; }
+  .web-redesign .web-expense-fab { right: 16px; bottom: calc(78px + env(safe-area-inset-bottom)); min-height: 44px; padding: 0 15px; }
+  .web-redesign #tab-members { padding-bottom: 116px; }
+  body.expense-action-sheet-open :is(#app-bottom-nav, #trip-bottom-nav) { display: none !important; }
+}
+
+/* The trip identity stays centered on phones while navigation and actions keep their own edges. */
+.web-redesign .web-trip-header-right { display: flex; flex: 0 0 auto; align-items: center; gap: 8px; min-width: 0; }
+.web-redesign .web-trip-header-right .web-trip-meta { margin: 0; }
+.web-redesign .web-trip-header-right .web-trip-overflow { margin-left: 0; }
+.web-redesign .web-trip-overflow .web-dropdown {
+  right: 0 !important;
+  left: auto !important;
+  max-height: none;
+  overflow: visible;
+}
+
+@media (max-width: 760px) {
+  body.web-redesign #screen-dashboard { width: 100%; max-width: none; margin: 0; }
+  body.web-redesign #screen-dashboard .dash-header { width: 100%; }
+  body.web-redesign #screen-dashboard .dash-top { width: 100%; }
+  body.web-redesign .web-trip-header-primary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    gap: 8px;
+  }
+  body.web-redesign .web-trip-breadcrumb { z-index: 1; }
+  body.web-redesign .web-trip-breadcrumb button {
+    min-width: 58px;
+    min-height: 44px;
+    padding: 0 4px;
+    font-size: 15px;
+  }
+  body.web-redesign .web-trip-heading-group {
+    position: absolute;
+    left: 50%;
+    z-index: 0;
+    width: min(124px, calc(100% - 210px));
+    transform: translateX(-50%);
+    text-align: center;
+    pointer-events: none;
+  }
+  body.web-redesign .web-trip-title-row { display: block; }
+  body.web-redesign .web-trip-title-row h1 {
+    display: block;
+    overflow: hidden;
+    font-size: 19px;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  body.web-redesign .web-trip-day-subtitle { min-height: 15px; margin-top: 4px; }
+  body.web-redesign .web-trip-day-subtitle #dash-day-badge {
+    display: block;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    color: var(--text-2);
+    background: transparent;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  body.web-redesign .web-trip-header-right { z-index: 1; margin-left: auto; gap: 6px; }
+  /* Website only (the app has its own header rules): the absolutely centred title
+     collided with the currency box, so let it share the row between Back and the
+     controls, and use the app's compact currency box. */
+  body.web-redesign:not(.native-redesign) .web-trip-heading-group {
+    position: static;
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    transform: none;
+  }
+  body.web-redesign:not(.native-redesign) .web-trip-header-primary #web-trip-currency select { width: 68px; min-width: 68px; padding: 0 18px 0 6px; font-size: 16px; }
+  body.web-redesign .web-trip-header-right #web-trip-members { display: none; }
+  body.web-redesign .web-trip-header-right .web-trip-meta { gap: 0; }
+  body.web-redesign .web-trip-overflow .web-dropdown {
+    width: min(260px, calc(100vw - 32px));
+    right: 0 !important;
+    left: auto !important;
+    max-height: none;
+    overflow: visible;
+  }
+  body.web-redesign .web-overflow-shortcuts { max-height: none; overflow: visible; }
+}

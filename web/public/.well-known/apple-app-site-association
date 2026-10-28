@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["945267LMP6.com.tripcash.app"],
+        "components": [
+          {
+            "/": "/auth-callback",
+            "comment": "TripCash authentication callback"
+          }
+        ]
+      }
+    ]
+  }
+}

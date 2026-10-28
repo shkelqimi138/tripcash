@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.tripcash.app",
+      "sha256_cert_fingerprints": [
+        "63:8B:5E:6C:E0:86:F4:9F:A0:51:77:C4:4E:C9:D1:3A:D0:4E:D9:5A:6E:7B:8E:0F:9D:CE:3D:54:C8:A0:91:3C"
+      ]
+    }
+  }
+]

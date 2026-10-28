@@ -1,0 +1,79 @@
+# Dependencies
+node_modules/
+Pods/
+
+# Build output
+dist/
+build/
+out/
+coverage/
+DerivedData/
+
+# Test reports
+playwright-report/
+test-results/
+blob-report/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.pem
+*.p8
+*.p12
+*.key
+*.cer
+*.mobileprovision
+*.jks
+*.keystore
+keystore.properties
+google-services.json
+GoogleService-Info.plist
+
+# Logs and caches
+*.log
+npm-debug.log*
+.cache/
+.eslintcache
+.wrangler/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.code-workspace
+xcuserdata/
+*.xcuserstate
+
+# Native local configuration (Android SDK path, Gradle caches)
+local.properties
+.gradle/
+
+# Supabase CLI local state
+supabase/.branches/
+supabase/.temp/
+
+# Hosting tool local folders
+.vercel/
+.netlify/
+
+# Private release checklists (kept locally, not published)
+docs/tracking/
+docs/security-deployment-checklist.md
+
+# Local tools, AI agents, and scratch files
+.claude/
+.codex/
+.cursor/
+.agents/
+artifacts/
+scratch/
+tmp/

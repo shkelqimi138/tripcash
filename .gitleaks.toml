@@ -1,0 +1,12 @@
+# Secret scanning: keep every default gitleaks rule and allow only the Supabase
+# anon key, which is public by design (shipped to every browser and app build).
+# The pattern is pinned to this project's ref and the "anon" role, so a leaked
+# service-role key or any other secret still fails CI.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Supabase anon key for project msnholvugsehlxkvzlxp (public by design)"
+regexTarget = "line"
+regexes = ['''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zbmhvbHZ1Z3NlaGx4a3Z6bHhwIiwicm9sZSI6ImFub24i[A-Za-z0-9_-]*\.[A-Za-z0-9_-]+''']

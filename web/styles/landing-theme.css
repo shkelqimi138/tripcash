@@ -1,0 +1,128 @@
+/* Public website theme controls and dark palette. Native builds omit this file. */
+.landing-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.landing-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 96px;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid #cfe0de;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .76);
+  color: #294a47;
+  font: 700 12px/1 'Public Sans', sans-serif;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+.landing-theme-toggle:hover { border-color: #0b7c78; color: #0b706d; }
+.landing-theme-toggle span { font-size: 16px; }
+.landing-theme-toggle b { font: inherit; }
+.landing-theme-toggle:focus-visible { outline: 3px solid #f59e0b; outline-offset: 3px; }
+
+body:not(.native-shell).dark .welcome-screen { background: #071e1c; color: #f7faf9; }
+body:not(.native-shell).dark :is(.landing-brand, .landing-hero h1, .landing-section-heading h2, .landing-final h2) { color: #f7faf9; }
+body:not(.native-shell).dark :is(.landing-nav-links a, .landing-nav-links button) { color: #a8bbb8; }
+body:not(.native-shell).dark :is(.landing-nav-links a, .landing-nav-links button):hover { color: #4fd1cb; }
+body:not(.native-shell).dark .landing-theme-toggle { border-color: #28514d; background: #0e3431; color: #dce8e6; }
+body:not(.native-shell).dark .landing-theme-toggle:hover { border-color: #4fd1cb; color: #4fd1cb; }
+body:not(.native-shell).dark .landing-kicker,
+body:not(.native-shell).dark .landing-section-heading > span,
+body:not(.native-shell).dark .landing-final > div > span { color: #4fd1cb; }
+body:not(.native-shell).dark :is(.landing-hero-copy > p, .landing-section-heading p, .landing-free-note) { color: #a8bbb8; }
+body:not(.native-shell).dark .store-badge { border-color: #28514d; background: rgba(14, 52, 49, .86); color: #a8bbb8; }
+body:not(.native-shell).dark .landing-orbit { border-color: rgba(79, 209, 203, .22); }
+
+body:not(.native-shell).dark .landing-phone { border-color: #1c4743; background: #0b2927; color: #f7faf9; box-shadow: 0 34px 80px rgba(0, 0, 0, .34); }
+body:not(.native-shell).dark .landing-phone::after { background: #020e0d; }
+body:not(.native-shell).dark :is(.phone-status, .phone-appbar small, .phone-expense small) { color: #93aaa7; }
+body:not(.native-shell).dark .phone-budget { background: #0e4641; }
+body:not(.native-shell).dark .phone-summary article { border-color: #28514d; background: #103532; }
+body:not(.native-shell).dark .phone-summary small { color: #93aaa7; }
+body:not(.native-shell).dark .phone-summary b { color: #f7faf9; }
+body:not(.native-shell).dark .phone-expense { border-color: #214743; }
+body:not(.native-shell).dark .phone-expense i { background: #153d39; }
+body:not(.native-shell).dark .phone-nav { border-color: #214743; background: #0e3431; }
+body:not(.native-shell).dark .landing-float { border-color: #28514d; background: rgba(14, 52, 49, .94); color: #f7faf9; box-shadow: 0 16px 38px rgba(0, 0, 0, .26); }
+body:not(.native-shell).dark .landing-float small { color: #93aaa7; }
+body:not(.native-shell).dark .landing-float > span { background: #123f3b; color: #4fd1cb; }
+body:not(.native-shell).dark .float-split > span { background: #3a2c10; color: #fbbf24; }
+
+body:not(.native-shell).dark .landing-proof { color: #a8bbb8; }
+body:not(.native-shell).dark .landing-proof b { background: #103d3a; color: #4fd1cb; }
+body:not(.native-shell).dark .feature-card { border-color: #28514d; background: #0e3431; box-shadow: 0 16px 46px rgba(0, 0, 0, .18); }
+body:not(.native-shell).dark .feature-card > i { background: #123f3b; color: #4fd1cb; }
+body:not(.native-shell).dark .feature-card h3,
+body:not(.native-shell).dark .split-total { color: #f7faf9; }
+body:not(.native-shell).dark .feature-card > p { color: #a8bbb8; }
+body:not(.native-shell).dark .mini-expenses span { background: #0a2a28; color: #b8c8c6; }
+body:not(.native-shell).dark .mini-expenses b { color: #f7faf9; }
+body:not(.native-shell).dark .feature-amber > i { background: #3a2c10; color: #fbbf24; }
+body:not(.native-shell).dark .split-people span { border-color: #0e3431; }
+body:not(.native-shell).dark .feature-dark { border-color: #32605b; background: #092724; }
+body:not(.native-shell).dark .steps-grid { border-color: #28514d; }
+body:not(.native-shell).dark .steps-grid article { border-color: #28514d; }
+body:not(.native-shell).dark .steps-grid article > b { color: #fbbf24; }
+body:not(.native-shell).dark .steps-grid h3 { color: #f7faf9; }
+body:not(.native-shell).dark .steps-grid p { color: #a8bbb8; }
+body:not(.native-shell).dark .landing-final { background: #103d3a; }
+body:not(.native-shell).dark .landing-footer { border-color: #28514d; color: #93aaa7; }
+body:not(.native-shell).dark .landing-footer :is(a, button) { color: #a8bbb8; }
+
+body:not(.native-shell).dark .screenshot-tile { border-color: #28514d; background: #0e3431; box-shadow: 0 8px 28px rgba(0, 0, 0, .2); }
+body:not(.native-shell).dark .screenshot-card img { border-color: #28514d; background: #071e1c; }
+body:not(.native-shell).dark .screenshot-zoom-cue { background: #103d3a; color: #4fd1cb; }
+body:not(.native-shell).dark .screenshot-tile figcaption b { color: #f7faf9; }
+body:not(.native-shell).dark .screenshot-tile figcaption span { color: #a8bbb8; }
+body:not(.native-shell).dark .screenshot-dialog { background: #0e3431; color: #f7faf9; }
+body:not(.native-shell).dark :is(.screenshot-dialog-header, .screenshot-dialog-toolbar) { border-color: #28514d; }
+body:not(.native-shell).dark .screenshot-dialog-toolbar span { color: #a8bbb8; }
+body:not(.native-shell).dark .screenshot-dialog button { border-color: #28514d; background: #123d39; color: #f7faf9; }
+body:not(.native-shell).dark .screenshot-dialog-viewport { background: #061715; }
+
+body:not(.native-shell).dark .contact-copy h2,
+body:not(.native-shell).dark .contact-copy > p strong,
+body:not(.native-shell).dark .contact-note strong { color: #f7faf9; }
+body:not(.native-shell).dark .contact-copy > span,
+body:not(.native-shell).dark .contact-consent button,
+body:not(.native-shell).dark .landing-legal-content a { color: #4fd1cb; }
+body:not(.native-shell).dark :is(.contact-copy > p, .contact-note small) { color: #a8bbb8; }
+body:not(.native-shell).dark .contact-note { border-color: #28514d; }
+body:not(.native-shell).dark .contact-note > b { background: #103d3a; color: #4fd1cb; }
+body:not(.native-shell).dark .contact-form { border-color: #28514d; background: #0e3431; box-shadow: 0 22px 60px rgba(0, 0, 0, .24); }
+body:not(.native-shell).dark .contact-field label,
+body:not(.native-shell).dark .contact-consent { color: #dce8e6; }
+body:not(.native-shell).dark :is(.contact-field input, .contact-field select, .contact-field textarea) { border-color: #32605b; background: #092724; color: #f7faf9; color-scheme: dark; }
+body:not(.native-shell).dark :is(.contact-field input, .contact-field textarea)::placeholder { color: #829996; }
+body:not(.native-shell).dark .contact-field > small { color: #93aaa7; }
+
+body:not(.native-shell).dark .landing-legal-dialog { background: #0e3431; color: #f7faf9; }
+body:not(.native-shell).dark .landing-legal-header { border-color: #28514d; background: #0e3431; }
+body:not(.native-shell).dark .landing-legal-header button { background: #123d39; color: #f7faf9; }
+body:not(.native-shell).dark .landing-legal-content :is(h1, h2) { color: #f7faf9; }
+body:not(.native-shell).dark .landing-legal-content :is(p, li) { color: #a8bbb8; }
+
+body:not(.native-shell).dark .analytics-consent { border-color: #32605b; background: #0e3431; color: #f7faf9; box-shadow: 0 20px 55px rgba(0, 0, 0, .38); }
+body:not(.native-shell).dark .analytics-consent-copy p { color: #b8c8c6; }
+body:not(.native-shell).dark .analytics-consent-copy a { color: #4fd1cb; }
+body:not(.native-shell).dark :is(.analytics-consent-reject, .analytics-preferences) { border-color: #4a716d; background: #092724; color: #dce8e6; }
+body:not(.native-shell).dark :is(.analytics-consent-reject, .analytics-preferences):hover { border-color: #4fd1cb; background: #103d3a; }
+
+@media (max-width: 900px) {
+  .landing-nav-controls { gap: 0; }
+}
+
+@media (max-width: 560px) {
+  .landing-theme-toggle { min-width: 44px; width: 44px; padding: 0; }
+  .landing-theme-toggle b { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-theme-toggle { transition: none; }
+}

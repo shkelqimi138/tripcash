@@ -1,0 +1,23 @@
+{
+  "appId": "com.tripcash.app",
+  "appName": "TripCash",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "backgroundColor": "#FFFFFF",
+  "plugins": {
+    "StatusBar": {
+      "style": "LIGHT",
+      "overlaysWebView": false,
+      "backgroundColor": "#FFFFFF"
+    },
+    "Keyboard": {
+      "resize": "none",
+      "resizeOnFullScreen": true
+    }
+  },
+  "ios": {
+    "contentInset": "automatic"
+  }
+}

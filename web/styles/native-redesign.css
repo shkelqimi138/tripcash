@@ -1,0 +1,396 @@
+/* Native shell adaptation of the shared TripCash redesign. Loaded only by --native. */
+body.native-redesign {
+  background-image: none;
+}
+body.native-redesign #screen-trips .app-header {
+  display: flex !important;
+  position: sticky;
+  top: 0;
+  z-index: 25;
+  min-height: calc(56px + env(safe-area-inset-top));
+  height: auto;
+  padding: max(10px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left));
+  border-bottom: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-card) 76%);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+html.native-shell .mobile-shell-header {
+  border-bottom: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-card) 76%);
+  box-shadow: none;
+}
+
+/* Keep Profile legal content in the app: compact, theme-aware, and dismissible. */
+html.native-shell .landing-legal-dialog {
+  width:min(720px,calc(100% - 24px));
+  max-height:calc(100dvh - 24px);
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:var(--bg-card);
+  color:var(--text);
+  box-shadow:none;
+}
+html.native-shell .landing-legal-dialog::backdrop { background:rgba(0,0,0,.48); backdrop-filter:blur(3px); }
+html.native-shell .landing-legal-header { padding:15px 18px; border-color:var(--border); background:var(--bg-card); }
+html.native-shell .landing-legal-header h2 { color:var(--text); font-size:18px; }
+html.native-shell .landing-legal-header button { width:36px; height:36px; background:var(--accent-bg); color:var(--text); }
+html.native-shell .landing-legal-content { max-height:calc(100dvh - 88px); padding:18px 18px 28px; }
+html.native-shell .landing-legal-content :is(h1,h2) { color:var(--text); }
+html.native-shell .landing-legal-content :is(p,li) { color:var(--text-2); }
+html.native-shell .landing-legal-content a { color:var(--accent); }
+body.native-redesign #screen-trips .app-header .header-right { display: none; }
+body.native-redesign #screen-trips .app-header .logo { font: 700 18px var(--heading); }
+body.native-redesign #screen-trips .app-header > [data-action="open-new-trip-modal"] {
+  width: auto;
+  min-height: 44px;
+  margin-left: auto;
+  padding-inline: 16px;
+  white-space: nowrap;
+}
+body.native-redesign .native-sync-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px max(16px, env(safe-area-inset-right)) 8px max(16px, env(safe-area-inset-left));
+  border-bottom: 1px solid var(--border);
+  color: var(--amber-text);
+  background: var(--amber-bg);
+  font-size: 12px;
+}
+body.native-redesign .native-sync-row[hidden] { display: none !important; }
+body.native-redesign .native-sync-row .offline-sync-status { flex: 1 1 180px; margin: 0; }
+body.native-redesign .native-sync-row .btn { width: auto; min-height: 44px; }
+body.native-redesign :is(.trips-content, .dash-content, .global-analytics-content, .profile-content) {
+  width: 100%;
+  max-width: 720px;
+  min-width: 0;
+  margin-inline: auto;
+  padding: 20px max(16px, env(safe-area-inset-right)) calc(92px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+}
+/* Native content is capped at 720px, so viewport breakpoints never see the real
+   column width; keep these layouts single-column like on iPhone. */
+body.native-redesign :is(.members-layout, .analytics-grid, .global-analytics-grid) {
+  grid-template-columns: minmax(0, 1fr);
+}
+body.native-redesign #screen-profile > .profile-content { padding-top: max(20px, env(safe-area-inset-top)); }
+body.native-redesign #screen-global-analytics > .global-analytics-content {
+  padding-top: max(20px, calc(env(safe-area-inset-top) + 12px));
+}
+body.native-redesign .web-dashboard-heading { margin-bottom: 20px; }
+body.native-redesign .web-dashboard-heading h1 { font-size: clamp(22px, 5vw, 28px); }
+body.native-redesign .web-trip-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+body.native-redesign .web-trip-tab { min-width: 0; padding-inline: 7px; }
+body.native-redesign .web-trips-grid { grid-template-columns: minmax(0, 1fr); }
+body.native-redesign .web-trip-card { padding: 20px; }
+body.native-redesign .web-trip-heading {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 5px 12px;
+  align-items: start;
+}
+body.native-redesign .web-trip-heading > div { grid-column: 2; }
+body.native-redesign .web-trip-heading .web-trip-tag { grid-column: 2; justify-self: start; }
+body.native-redesign .native-trip-emoji {
+  display: grid;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  background: var(--accent-bg);
+  font-size: 26px;
+  line-height: 1;
+}
+body.native-redesign .web-trip-card:nth-child(3n + 2) .native-trip-emoji { background: var(--amber-bg); }
+body.native-redesign .web-trip-card:nth-child(3n) .native-trip-emoji { background: var(--track); }
+body.native-redesign .web-ended-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 6px 12px;
+  align-items: start;
+  background: var(--bg-card);
+}
+body.native-redesign .web-ended-row > div { grid-column: 2; }
+body.native-redesign .web-ended-row .native-trip-emoji { grid-row: 1 / span 4; background: var(--track); }
+body.native-redesign .native-closed-stamp {
+  display: inline-flex;
+  grid-column: 2;
+  justify-self: start;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 10px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 999px;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 700;
+}
+body.native-redesign .web-ended-row .web-trip-tag,
+body.native-redesign .web-ended-row .web-pending-pill { grid-column: 2; justify-self: start; }
+body.native-redesign .web-ended-row .web-trip-tag.is-neutral { display: none; }
+body.native-redesign .web-trip-metrics > div { padding: 12px; }
+body.native-redesign .web-trip-metrics strong { font-size: clamp(18px, 5vw, 22px); }
+body.native-redesign #screen-dashboard { width: 100%; max-width: none; margin: 0; padding-bottom: 0; }
+body.native-redesign #screen-dashboard .dash-header {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: none;
+  padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+  background: var(--bg);
+  backdrop-filter: none;
+}
+body.native-redesign #screen-dashboard .dash-top { padding: 0; }
+body.native-redesign .web-trip-header { flex: 1 1 auto; width: 100%; gap: 12px; }
+body.native-redesign .web-trip-header-primary { display: flex; align-items: center; gap: 8px; min-width: 0; }
+body.native-redesign .web-trip-heading-group { flex: 1 1 auto; width: auto; min-width: 0; }
+body.native-redesign .web-trip-title-row h1 { font-size: clamp(21px, 5vw, 28px); }
+body.native-redesign .web-trip-meta { gap: 6px 10px; }
+body.native-redesign #web-trip-members { max-width: 100%; }
+body.native-redesign .web-workspace-header-actions { width: 100%; justify-content: flex-start; }
+body.native-redesign .web-workspace-header-actions > :is(button, details) { flex: 1 1 auto; }
+body.native-redesign #trip-bottom-nav {
+  position: static;
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  height: auto;
+  margin: 12px 0 0;
+  padding: 0 0 6px;
+  gap: 8px;
+  overflow-x: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  -webkit-overflow-scrolling: touch;
+}
+body.native-redesign #trip-bottom-nav[hidden] { display: none !important; }
+body.native-redesign #trip-bottom-nav button {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--text-2);
+}
+body.native-redesign #trip-bottom-nav button.active { color: var(--accent-text); background: var(--accent-bg); }
+body.native-redesign .web-workspace-cards { grid-template-columns: minmax(0, 1fr); }
+body.native-redesign .web-workspace-layout { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+body.native-redesign .web-balances-card { display: none; }
+body.native-redesign .web-workspace-rail { display: flex; }
+body.native-redesign .web-settle-card :is(input, label) { display: none; }
+body.native-redesign #web-workspace-expenses-list .trip-add-expense { display: grid; }
+body.native-redesign #app-bottom-nav {
+  position: fixed;
+  inset: auto 0 0;
+  display: grid !important;
+  width: 100%;
+  max-width: none;
+  min-height: calc(64px + env(safe-area-inset-bottom));
+  margin: 0;
+  padding: 0 max(8px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(8px, env(safe-area-inset-left));
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--bg-card);
+  box-shadow: none;
+  transform: none;
+}
+body.native-redesign #app-bottom-nav[hidden] { display: none !important; }
+body.native-redesign #app-bottom-nav button { min-height: 64px; color: var(--text-2); }
+body.native-redesign #app-bottom-nav button.active { color: var(--accent-text); background: transparent; }
+body.native-redesign #app-bottom-nav button.active::before { content: ''; position: absolute; top: 6px; width: 36px; height: 4px; border-radius: 2px; background: var(--accent); }
+body.native-redesign #app-bottom-nav .nav-icon { background: transparent; }
+body.native-redesign #web-expense-host {
+  display: none;
+  position: fixed;
+  z-index: 110;
+  inset: 0;
+  margin: 0;
+}
+body.native-redesign.web-expense-open { overflow: hidden; }
+body.native-redesign.web-expense-open #web-expense-host:not([hidden]) { display: flex; align-items: flex-end; justify-content: center; }
+body.native-redesign.web-expense-open #web-expense-host .web-expense-backdrop { display: block; position: absolute; inset: 0; background: rgba(0, 0, 0, .58); }
+body.native-redesign #web-expense-host .expense-page {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  max-height: calc(100dvh - env(safe-area-inset-top) - 8px);
+  min-height: 0;
+  padding: 18px max(16px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 20px 20px 0 0;
+  -webkit-overflow-scrolling: touch;
+}
+body.native-redesign #web-expense-host .modal-hdr { position: sticky; top: -18px; z-index: 2; min-height: 36px; padding: 7px 0; background: var(--bg-card); }
+body.native-redesign #web-expense-host .modal-close { display: grid; place-items: center; }
+body.native-redesign #web-expense-host #form-add-expense {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'title' 'amount' 'category' 'payer' 'day' 'split' 'more' 'details' 'save';
+  gap: 16px;
+}
+body.native-redesign #web-expense-host #web-expense-details { grid-template-columns: minmax(0, 1fr); }
+body.native-redesign #web-expense-host #btn-add-expense { position: sticky; bottom: 0; min-height: 48px; }
+body.native-redesign #web-expense-host :is(input, select, textarea) { font-size: 16px !important; }
+body.native-redesign #web-expense-host #exp-amount { font-size: 20px !important; }
+html.native-keyboard-open body.native-redesign :is(#app-bottom-nav, #trip-bottom-nav) { display: none !important; }
+html.native-keyboard-open body.native-redesign #web-expense-host .expense-page { max-height: 100dvh; }
+/* Sheets also open on the signed-out screens (e.g. Reset password), so the keyboard
+   rules for .modal must not depend on the signed-in body.native-redesign class. */
+html.native-keyboard-open :is(.modal-sheet, body.native-redesign #web-expense-host .expense-page) { animation: none !important; transition: none !important; }
+html.native-keyboard-open .modal.open .legal-links { display: none; }
+html.native-ios.native-keyboard-open { --native-keyboard-height: 0px; }
+html.native-ios.native-keyboard-open .modal.open,
+html.native-ios.native-keyboard-open body.native-redesign #web-expense-host {
+  bottom: var(--native-keyboard-height, 0px);
+  transition: bottom .25s ease-out;
+}
+html.native-ios.native-keyboard-open .modal.open .modal-sheet,
+html.native-ios.native-keyboard-open body.native-redesign #web-expense-host .expense-page {
+  max-height: calc(100dvh - var(--native-keyboard-height, 0px) - env(safe-area-inset-top) - 8px);
+  overflow-y: auto;
+}
+/* The webview does not shrink for the keyboard, so give the sign-in screen room
+   to scroll its fields and buttons above it. */
+html.native-ios.native-keyboard-open #screen-auth {
+  padding-bottom: calc(var(--native-keyboard-height, 0px) + 18px);
+  scroll-padding-bottom: calc(var(--native-keyboard-height, 0px) + 24px);
+}
+body.native-redesign.modal-open :is(#app-bottom-nav, #trip-bottom-nav) { display: none !important; }
+@media (max-width: 390px) {
+  body.native-redesign #web-expense-host #form-add-expense { grid-template-areas: 'title' 'amount' 'category' 'payer' 'day' 'split' 'more' 'details' 'save'; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.native-redesign #web-expense-host .expense-page { scroll-behavior: auto; }
+}
+
+/* Native expense sheet shares the fixed action/independent scroll with phone Safari. */
+body.native-redesign #web-expense-host .expense-page { display: flex; flex-direction: column; overflow: hidden; }
+body.native-redesign #web-expense-host .modal-hdr { position: relative; top: auto; flex: 0 0 auto; }
+body.native-redesign #web-expense-host #form-add-expense { flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-bottom: 10px; grid-template-areas: 'title' 'amount' 'category' 'payer' 'day' 'split' 'more' 'details'; grid-auto-rows: max-content; align-content: start; }
+body.native-redesign #web-expense-host .web-expense-footer { flex: 0 0 auto; padding-top: 10px; border-top: 1px solid var(--border); background: var(--bg-card); }
+body.native-redesign #web-expense-host .web-expense-footer #btn-add-expense { position: static; width: 100%; min-height: 48px; }
+body.native-redesign.web-expense-open :is(#app-bottom-nav, #trip-bottom-nav) { display: none !important; }
+/* Keep the workspace FAB clear of the native global bar on iPad layouts. */
+body.native-redesign .web-expense-fab { bottom: calc(84px + env(safe-area-inset-bottom)); }
+@media (max-width: 760px) {
+  html.native-ios body.native-redesign #screen-dashboard.active {
+    height: 100dvh;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  html.native-ios body.native-redesign #screen-dashboard .dash-content {
+    flex: 0 0 auto;
+    overflow: visible;
+    -webkit-overflow-scrolling: auto;
+  }
+  body.native-redesign .web-trip-card, body.native-redesign .web-ended-row { display: block; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  body.native-redesign :is(.web-trip-card, .web-ended-row) > .mobile-trip-row { display: grid; grid-column: 1 / -1; }
+  body.native-redesign .web-ended-row > :not(.mobile-trip-row) { display: none; }
+  body.native-redesign #screen-dashboard .dash-top { padding: 10px 0 6px; }
+  body.native-redesign #trip-bottom-nav,
+  body.native-redesign #trip-bottom-nav.visible {
+    position: fixed; z-index: 100; inset: auto 0 0; display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0;
+    width: 100%; max-width: none; min-height: calc(64px + env(safe-area-inset-bottom));
+    margin: 0; padding: 0 max(4px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(4px, env(safe-area-inset-left));
+    overflow: visible; border: 0; border-top: 1px solid var(--border);
+    border-radius: 0; background: var(--bg-card); box-shadow: none; transform: none;
+  }
+  body.native-redesign #trip-bottom-nav[hidden] { display: none !important; }
+  body.native-redesign #trip-bottom-nav button { position: relative; flex: none; display: flex; min-width: 0; min-height: 64px; padding: 0 2px; flex-direction: column; gap: 1px; border-radius: 0; }
+  body.native-redesign #trip-bottom-nav button.active { color: var(--accent-text); background: transparent; }
+  body.native-redesign #trip-bottom-nav button.active::before { content: ''; position: absolute; top: 5px; width: 28px; height: 4px; border-radius: 2px; background: var(--accent); }
+  body.native-redesign #trip-bottom-nav .nav-icon { display: grid; place-items: center; width: 36px; height: 25px; }
+  body.native-redesign #trip-bottom-nav button b { font-size: 10px; line-height: 1.1; }
+  body.native-redesign .web-expense-fab { bottom: calc(78px + env(safe-area-inset-bottom)); }
+}
+
+/* Trip header stays on one row; the secondary controls remain compact underneath. */
+body.native-redesign .web-trip-header-primary .web-trip-overflow { flex: 0 0 auto; margin-left: auto; }
+body.native-redesign .web-trip-title-row { min-width: 0; }
+body.native-redesign .web-trip-title-row h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body.native-redesign .web-trip-header-primary .web-trip-meta { flex: 0 0 auto; flex-wrap: nowrap; gap: 4px; margin-left: auto; }
+body.native-redesign .web-trip-header-primary #web-trip-currency { max-width: 68px; }
+body.native-redesign .web-trip-header-primary #web-trip-currency select { width: 68px; min-width: 68px; padding: 0 18px 0 6px; font-size: 14px; }
+body.native-redesign .web-trip-header-primary #web-trip-members { gap: 2px; }
+body.native-redesign .web-trip-header-primary #web-trip-members .web-member-avatar { width: 20px; height: 20px; flex-basis: 20px; font-size: 8px; }
+body.native-redesign .web-expense-fab { right: max(20px, env(safe-area-inset-right)); z-index: 9999; }
+
+/* Mobile trip header: centered trip identity, with back and actions kept at opposite edges. */
+body.native-redesign .web-trip-header-primary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  gap: 8px;
+}
+body.native-redesign #screen-dashboard .dash-top { width: 100%; }
+body.native-redesign .web-trip-breadcrumb { z-index: 1; }
+body.native-redesign .web-trip-breadcrumb .btn-back {
+  min-width: 58px;
+  min-height: 44px;
+  padding: 0 4px;
+  font-size: 15px;
+}
+body.native-redesign .web-trip-heading-group {
+  position: absolute;
+  left: 50%;
+  z-index: 0;
+  width: min(160px, calc(100% - 210px));
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+body.native-redesign .web-trip-title-row { display: block; }
+body.native-redesign #screen-dashboard .web-trip-title-row h1 {
+  display: block;
+  overflow: hidden;
+  font-size: 16px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+body.native-redesign .web-trip-day-subtitle { min-height: 15px; margin-top: 4px; }
+body.native-redesign .web-trip-day-subtitle #dash-day-badge {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--text-2);
+  background: transparent;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+body.native-redesign .web-trip-header-right {
+  display: flex;
+  z-index: 1;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+body.native-redesign .web-trip-header-right .web-trip-meta { display: flex; flex: 0 0 auto; gap: 0; margin: 0; }
+body.native-redesign .web-trip-header-right #web-trip-members { display: none; }
+body.native-redesign .web-trip-header-right .web-trip-overflow { flex: 0 0 auto; margin-left: 0; }
+body.native-redesign .web-trip-overflow .web-dropdown {
+  right: 0 !important;
+  left: auto !important;
+  max-height: none;
+  overflow: visible;
+  width: min(260px, calc(100vw - 32px));
+}
+body.native-redesign .web-overflow-shortcuts { max-height: none; overflow: visible; }

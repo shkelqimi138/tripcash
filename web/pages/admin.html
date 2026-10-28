@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TripCash — Admin</title>
+  <meta name="robots" content="noindex" />
+  <meta name="description" content="TripCash administrator access." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles/app.css" />
+  <script src="scripts/supabase-client.js"></script>
+</head>
+<body>
+
+  <div class="admin-wrap">
+    <div class="admin-header">
+      <h1>
+        <span class="logo">
+          <svg class="logo-pin" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 0C3.69 0 1 2.69 1 6c0 4.5 6 12 6 12s6-7.5 6-12C13 2.69 10.31 0 7 0z" fill="var(--accent)"/>
+            <rect x="3.5" y="3.5" width="7" height="4.5" rx="1" fill="white" opacity="0.92"/>
+            <circle cx="9" cy="5.75" r="0.9" fill="var(--accent)"/>
+            <rect x="3.5" y="5.5" width="4" height="0.9" rx="0.4" fill="var(--accent)" opacity="0.5"/>
+          </svg>
+          <span class="logo-trip">Trip</span><span class="logo-cash">Cash</span>
+        </span>
+        <span class="admin-label">Admin</span>
+      </h1>
+      <div class="admin-header-actions">
+        <a href="/" class="btn btn-secondary btn-sm">← App</a>
+        <button id="admin-logout" class="btn btn-secondary btn-sm" type="button" hidden>Log out</button>
+      </div>
+    </div>
+
+    <div id="admin-loading">Loading…</div>
+    <div id="admin-body"></div>
+  </div>
+
+  <script src="scripts/admin-client.js"></script>
+  <script src="scripts/admin.js"></script>
+
+</body>
+</html>

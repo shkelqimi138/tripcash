@@ -1,0 +1,20 @@
+# Generated, vendored, and native project files
+node_modules/
+dist/
+artifacts/
+playwright-report/
+test-results/
+android/
+ios/
+package-lock.json
+
+# Reports written by CI tools such as gitleaks
+*.sarif
+
+# Markup, styles, SQL, and docs are kept as written; release tests match exact markup
+*.html
+*.css
+*.md
+supabase/
+web/assets/
+assets/

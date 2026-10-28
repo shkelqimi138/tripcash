@@ -1,0 +1,206 @@
+[
+  {
+    "name": "clear bar receipt",
+    "upstream": {
+      "title": "Corner Bar",
+      "amount": 18.4,
+      "amountKind": "final_total",
+      "amountEvidence": "TOTAL EUR 18.40",
+      "subtotal": 15.33,
+      "tax": 3.07,
+      "taxIncluded": null,
+      "currency": "EUR",
+      "category": "drinks",
+      "receiptDate": "2026-10-06"
+    },
+    "status": 200,
+    "expected": {
+      "title": "Corner Bar",
+      "amount": 18.4,
+      "currency": "EUR",
+      "category": "drinks",
+      "receiptDate": "2026-10-06"
+    }
+  },
+  {
+    "name": "VAT-inclusive total equal to printed subtotal",
+    "upstream": {
+      "title": "Euro Test Market",
+      "amount": 12,
+      "amountKind": "final_total",
+      "amountEvidence": "TOTAL EUR 12.00",
+      "subtotal": 12,
+      "tax": 1.92,
+      "taxIncluded": true,
+      "currency": "EUR",
+      "category": "food",
+      "receiptDate": "2026-10-20"
+    },
+    "status": 200,
+    "expected": {
+      "title": "Euro Test Market",
+      "amount": 12,
+      "currency": "EUR",
+      "category": "food",
+      "receiptDate": "2026-10-20"
+    }
+  },
+  {
+    "name": "partial transport receipt",
+    "upstream": {
+      "title": "City Taxi",
+      "amount": 24,
+      "amountKind": "final_total",
+      "amountEvidence": "Total 24.00",
+      "subtotal": null,
+      "tax": null,
+      "currency": null,
+      "category": "transport",
+      "receiptDate": null
+    },
+    "status": 200,
+    "expected": { "title": "City Taxi", "amount": 24, "currency": null, "category": "transport", "receiptDate": null }
+  },
+  {
+    "name": "hotel invoice with outstanding balance",
+    "upstream": {
+      "title": "Harbor Hotel",
+      "amount": 214.75,
+      "amountKind": "outstanding_balance",
+      "amountEvidence": "Balance due EUR 214.75",
+      "subtotal": null,
+      "tax": null,
+      "currency": "EUR",
+      "category": "hotel",
+      "receiptDate": "2026-10-08"
+    },
+    "status": 200,
+    "expected": {
+      "title": "Harbor Hotel",
+      "amount": 214.75,
+      "currency": "EUR",
+      "category": "hotel",
+      "receiptDate": "2026-10-08"
+    }
+  },
+  {
+    "name": "unclear photo",
+    "upstream": {
+      "title": null,
+      "amount": null,
+      "amountKind": "unclear",
+      "amountEvidence": null,
+      "subtotal": null,
+      "tax": null,
+      "currency": null,
+      "category": null,
+      "receiptDate": null
+    },
+    "status": 200,
+    "expected": { "title": null, "amount": null, "currency": null, "category": null, "receiptDate": null }
+  },
+  {
+    "name": "subtotal without a final-total label",
+    "upstream": {
+      "title": "Corner Shop",
+      "amount": 99.99,
+      "amountKind": "final_total",
+      "amountEvidence": "Subtotal 99.99",
+      "subtotal": null,
+      "tax": null,
+      "currency": "EUR",
+      "category": "food",
+      "receiptDate": "2026-10-06"
+    },
+    "status": 200,
+    "expected": {
+      "title": "Corner Shop",
+      "amount": null,
+      "currency": "EUR",
+      "category": "food",
+      "receiptDate": "2026-10-06"
+    }
+  },
+  {
+    "name": "control characters in merchant title",
+    "upstream": {
+      "title": " Cafe\n\tCentral ",
+      "amount": 7.5,
+      "amountKind": "final_total",
+      "amountEvidence": "Gesamt EUR 7.50",
+      "subtotal": null,
+      "tax": null,
+      "currency": "EUR",
+      "category": "food",
+      "receiptDate": "2024-02-29"
+    },
+    "status": 200,
+    "expected": {
+      "title": "Cafe Central",
+      "amount": 7.5,
+      "currency": "EUR",
+      "category": "food",
+      "receiptDate": "2024-02-29"
+    }
+  },
+  {
+    "name": "impossible calendar date keeps the other fields",
+    "upstream": {
+      "title": "Hotel",
+      "amount": 120,
+      "amountKind": "final_total",
+      "amountEvidence": "Total EUR 120.00",
+      "subtotal": null,
+      "tax": null,
+      "currency": "EUR",
+      "category": "hotel",
+      "receiptDate": "2026-02-30"
+    },
+    "status": 200,
+    "expected": { "title": "Hotel", "amount": 120, "currency": "EUR", "category": "hotel", "receiptDate": null }
+  },
+  {
+    "name": "non-positive payable total keeps the other fields",
+    "upstream": {
+      "title": "Market",
+      "amount": 0,
+      "amountKind": "final_total",
+      "amountEvidence": "Total EUR 0.00",
+      "subtotal": null,
+      "tax": null,
+      "currency": "EUR",
+      "category": "food",
+      "receiptDate": "2026-10-06"
+    },
+    "status": 200,
+    "expected": {
+      "title": "Market",
+      "amount": null,
+      "currency": "EUR",
+      "category": "food",
+      "receiptDate": "2026-10-06"
+    }
+  },
+  {
+    "name": "unsupported currency keeps the other fields",
+    "upstream": {
+      "title": "Restaurant",
+      "amount": 10,
+      "amountKind": "final_total",
+      "amountEvidence": "Total BTC 10",
+      "subtotal": null,
+      "tax": null,
+      "currency": "BTC",
+      "category": "food",
+      "receiptDate": "2026-10-06"
+    },
+    "status": 200,
+    "expected": {
+      "title": "Restaurant",
+      "amount": 10,
+      "currency": null,
+      "category": "food",
+      "receiptDate": "2026-10-06"
+    }
+  }
+]
